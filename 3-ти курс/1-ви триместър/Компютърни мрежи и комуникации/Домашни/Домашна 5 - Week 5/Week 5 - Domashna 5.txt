@@ -1,0 +1,179 @@
+PC3> ip 198.51.100.2 255.255.255.252 198.51.100.1
+Checking for duplicate address...
+PC1 : 198.51.100.2 255.255.255.252 gateway 198.51.100.1
+
+PC3> show ip
+
+NAME        : PC3[1]
+IP/MASK     : 198.51.100.2/30
+GATEWAY     : 198.51.100.1
+DNS         :
+MAC         : 00:50:79:66:68:02
+LPORT       : 10016
+RHOST:PORT  : 127.0.0.1:10017
+MTU:        : 1500
+
+PC3> ping 192.168.10.21
+192.168.10.21 icmp_seq=1 timeout
+192.168.10.21 icmp_seq=2 timeout
+192.168.10.21 icmp_seq=3 timeout
+192.168.10.21 icmp_seq=4 timeout
+192.168.10.21 icmp_seq=5 timeout
+
+PC3> ping 192.168.10.22
+192.168.10.22 icmp_seq=1 timeout
+192.168.10.22 icmp_seq=2 timeout
+192.168.10.22 icmp_seq=3 timeout
+192.168.10.22 icmp_seq=4 timeout
+192.168.10.22 icmp_seq=5 timeout
+
+
+PC1> ip dhcp
+DDORA IP 192.168.10.21/24 GW 192.168.10.1
+
+PC1> ping 198.51.100.2
+84 bytes from 198.51.100.2 icmp_seq=1 ttl=63 time=45.533 ms
+84 bytes from 198.51.100.2 icmp_seq=2 ttl=63 time=60.455 ms
+84 bytes from 198.51.100.2 icmp_seq=3 ttl=63 time=60.436 ms
+84 bytes from 198.51.100.2 icmp_seq=4 ttl=63 time=46.006 ms
+84 bytes from 198.51.100.2 icmp_seq=5 ttl=63 time=45.848 ms
+
+PC1> ping 192.168.10.22
+84 bytes from 192.168.10.22 icmp_seq=1 ttl=64 time=1.157 ms
+84 bytes from 192.168.10.22 icmp_seq=2 ttl=64 time=0.951 ms
+84 bytes from 192.168.10.22 icmp_seq=3 ttl=64 time=1.214 ms
+84 bytes from 192.168.10.22 icmp_seq=4 ttl=64 time=1.089 ms
+84 bytes from 192.168.10.22 icmp_seq=5 ttl=64 time=0.780 ms
+
+PC1> show ip
+
+NAME        : PC1[1]
+IP/MASK     : 192.168.10.21/24
+GATEWAY     : 192.168.10.1
+DNS         : 192.168.10.1
+DHCP SERVER : 192.168.10.1
+DHCP LEASE  : 305754, 305940/152970/267697
+DOMAIN NAME : test.com
+MAC         : 00:50:79:66:68:00
+LPORT       : 10012
+RHOST:PORT  : 127.0.0.1:10013
+MTU:        : 1500
+
+
+PC2> ip dhcp
+DDORA IP 192.168.10.22/24 GW 192.168.10.1
+
+PC2> show ip
+
+NAME        : PC2[1]
+IP/MASK     : 192.168.10.22/24
+GATEWAY     : 192.168.10.1
+DNS         : 192.168.10.1
+DHCP SERVER : 192.168.10.1
+DHCP LEASE  : 305747, 305940/152970/267697
+DOMAIN NAME : test.com
+MAC         : 00:50:79:66:68:01
+LPORT       : 10014
+RHOST:PORT  : 127.0.0.1:10015
+MTU:        : 1500
+
+PC2> ping 198.51.100.2
+84 bytes from 198.51.100.2 icmp_seq=1 ttl=63 time=30.740 ms
+84 bytes from 198.51.100.2 icmp_seq=2 ttl=63 time=45.238 ms
+84 bytes from 198.51.100.2 icmp_seq=3 ttl=63 time=45.501 ms
+84 bytes from 198.51.100.2 icmp_seq=4 ttl=63 time=30.527 ms
+84 bytes from 198.51.100.2 icmp_seq=5 ttl=63 time=30.924 ms
+
+PC2> ping 192.168.10.21
+84 bytes from 192.168.10.21 icmp_seq=1 ttl=64 time=1.487 ms
+84 bytes from 192.168.10.21 icmp_seq=2 ttl=64 time=1.097 ms
+84 bytes from 192.168.10.21 icmp_seq=3 ttl=64 time=0.941 ms
+84 bytes from 192.168.10.21 icmp_seq=4 ttl=64 time=0.930 ms
+84 bytes from 192.168.10.21 icmp_seq=5 ttl=64 time=1.239 ms
+
+PC2>
+
+
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#int fa 0/0
+R1(config-if)#ip add
+R1(config-if)#ip address 192.168.10.1 255.255.255.0
+R1(config-if)#no shut
+R1(config-if)#exit
+R1(config)#int fa
+*Mar  1 00:02:16.871: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:02:17.871: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+R1(config)#int fa 0/1
+R1(config-if)#ip add
+R1(config-if)#ip address 198.51.100.1 255.255.255.252
+R1(config-if)#no shut
+R1(config-if)#ed
+*Mar  1 00:02:40.079: %LINK-3-UPDOWN: Interface FastEthernet0/1, changed state to up
+*Mar  1 00:02:41.079: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+R1(config-if)#do wr
+Building configuration...
+[OK]
+R1(config-if)#exit
+R1(config)#ip dhcp pool pool_p1
+R1(dhcp-config)#netw
+R1(dhcp-config)#network 192.168.10.0 255.255.255.0
+R1(dhcp-config)#dns
+R1(dhcp-config)#dns-server 192.168.10.1
+R1(dhcp-config)#def
+R1(dhcp-config)#default-router 192.168.10.1
+R1(dhcp-config)#dom
+R1(dhcp-config)#domain-name test.com
+R1(dhcp-config)#lease 3 12 59
+R1(dhcp-config)#exit
+R1(config)#do wr
+Building configuration...
+[OK]
+R1(config)#ip dhcp exc
+R1(config)#ip dhcp excluded-address 192.168.10.1 192.168.10.20
+R1(config)#do wr
+Building configuration...
+[OK]
+R1(config)#int fa 0/0
+R1(config-if)#ip nat inside
+R1(config-if)#exit
+*Mar  1 00:04:59.479: %LINEPROTO-5-UPDOWN: Line protocol on Interface NVI0, changed state to up
+R1(config-if)#exit
+R1(config)#do wr
+Building configuration...
+[OK]
+R1(config)#acce
+R1(config)#int fa 0/1
+R1(config-if)#ip nat outside
+R1(config-if)#exit
+R1(config)#do wr
+Building configuration...
+[OK]
+R1(config)#acce
+R1(config)#access-list 1 perm
+R1(config)#access-list 1 permit 192.168.10.0 0.0.0.255
+R1(config)#ip nat ins
+R1(config)#ip nat inside sour
+R1(config)#ip nat inside source list 1 in
+R1(config)#ip nat inside source list 1 interface fa 0/1 over
+R1(config)#ip nat inside source list 1 interface fa 0/1 overload
+R1(config)#do wr
+Building configuration...
+[OK]
+R1(config)#show ip nat tr
+
+R1(config)#exit
+R1#show ip nat t
+*Mar  1 00:08:15.295: %SYS-5-CONFIG_I: Configured from console by console
+R1#show ip nat tr
+Pro Inside global      Inside local       Outside local      Outside global
+icmp 198.51.100.1:143  192.168.10.22:143  198.51.100.2:143   198.51.100.2:143
+icmp 198.51.100.1:64398 192.168.10.22:64398 198.51.100.2:64398 198.51.100.2:64398
+icmp 198.51.100.1:64654 192.168.10.22:64654 198.51.100.2:64654 198.51.100.2:64654
+icmp 198.51.100.1:64910 192.168.10.22:64910 198.51.100.2:64910 198.51.100.2:64910
+icmp 198.51.100.1:65166 192.168.10.22:65166 198.51.100.2:65166 198.51.100.2:65166
+
+
+
+
+

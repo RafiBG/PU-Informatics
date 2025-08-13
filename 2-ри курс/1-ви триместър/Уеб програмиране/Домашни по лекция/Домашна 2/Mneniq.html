@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <title>Мнения</title>
+</head>
+<body>
+    <h1>Мнения</h1>
+    
+<p>Кое е любимото ти животно?</p>
+
+<form>
+  <input type="radio" id="dog" name="fav_animal" value="Dog">
+  <label for="html">Куче</label><br>
+  <input type="radio" id="cat" name="fav_animal" value="Cat">
+  <label for="css">Котка</label><br>
+</form>
+
+<p>Имаш ли превозни средства?</p>
+<form>
+    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+    <label for="vehicle1"> Имам колело</label><br>
+    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+    <label for="vehicle2"> Имам кола</label><br>
+    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+    <label for="vehicle3"> Имам лодка</label>
+  </form>
+
+<p>Напишете мнението си тук:</p>
+
+<form action="/action_page.php">
+  <textarea name="message" rows="10" cols="30">The cat was playing in the garden.</textarea>
+  <br><br>
+  <!--<input type="submit">-->
+</form>
+<form>
+<label for="pwd">Напишете парола:</label><br>
+  <input type="password" id="pwd" name="pwd" minlength="8"><br><br>
+  <!--<input type="submit">-->
+</form>
+<form>
+  <button type="button" onclick="alert('Здравейте')">Натисни ме!</button>
+</form>
+
+<p>Оценете сайта ни:</p>
+
+<form action="/action_page.php">
+  <input list="marks" name="mark">
+  <datalist id="marks">
+    <option value="1">
+    <option value="2">
+    <option value="3">
+    <option value="4">
+    <option value="5">
+  </datalist>
+  <!--<input type="submit">-->
+</form>
+
+<p>Калкулатор</p>
+
+<form action="/action_page.php"
+oninput="x.value=parseInt(a.value)+parseInt(b.value)">
+  0
+  <input type="range" id="a" name="a" value="50">
+  100 +
+  <input type="number" id="b" name="b" value="50">
+  =
+  <output name="x" for="a b"></output>
+  <br><br>
+  <!--<input type="submit">-->
+
+  <p>Какъв вид коли харесваш?</p>
+
+<form action="/action_page.php">
+  <label for="cars">Избери вид кола:</label>
+  <select id="cars" name="cars" size="4" multiple>
+    <option value="volvo">Нормални</option>
+    <option value="saab">Джипове</option>
+    <option value="fiat">Спортни</option>
+    <option value="audi">Класически</option>
+  </select><br><br>
+  <!--<input type="submit">-->
+</form>
+
+</body>
+</html>

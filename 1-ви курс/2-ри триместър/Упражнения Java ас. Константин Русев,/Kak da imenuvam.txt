@@ -1,0 +1,15 @@
+int sumOperation = 1;  camelCase   maisivi
+
+class TaskOne          PascalCase  RafiESuper
+
+
+import java.util.Scanner;
+Scanner sc = new Scanner(System.in);
+
+int myint = sc.nextInt();
+
+final int SPECIAL_NUMBER = 1;  final отбелязва че числото
+ 			       не може да се променя (специално число)
+
+|| -> or - или
+&& -> and - и

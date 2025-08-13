@@ -1,0 +1,32 @@
+SETTINGS ROUTER:	(in R1 console)
+
+R1# configure terminal
+R1(confing)# interface fa0/0
+R1(config-if)# ip address 192.168.12.1 255.255.255.0
+R1(config-if)# no shutdown
+R1(config-if)# exit
+R1(confing)#ip dhcp pool pool_rl_1
+R1(dhcp-config)# network 192.168.12.0 255.255.255.0
+R1(dhcp-config)# default-router 192.168.12.1
+R1(dhcp-config)# dns-server 192.168.12.1
+R1(dhcp-config)# domain-name test.com
+lease 3 12 59
+R1(dhcp-config)# exit
+R1(config)# ip dhcp excluded-address 192.168.12.1 192.168.12.100
+R1(config)# exit
+R1# write
+
+запис | write R1#
+      | copy writing-config startup-config
+
+PC-SETTINGS
+
+ip dhcp
+R1# show ip int br
+
+R1# show run ... end
+
+PC
+show ip
+ping 192.168.31.151/24 ( in console PC6 ping PC4 and PC1)
+ping 192.168.12.101/24

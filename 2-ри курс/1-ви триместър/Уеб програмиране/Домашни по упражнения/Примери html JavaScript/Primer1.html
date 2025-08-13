@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<head>
+<style>
+.square{
+width: 50px; height: 50px;
+position: absolute;
+}
+ 
+#red{
+background-color: red;
+top: 0px; left: 0px;
+}
+ 
+#green{
+background-color: green;
+top: 50px; left: 50px;
+}
+ 
+#blue{
+background-color: blue;
+color: white;
+line-height: 50px;
+text-align: center;
+top: 100px; left: 100px;
+}
+</style>
+ 
+<script>
+ 
+// arrays
+tNumbers = ["zero", "one", "two", "three", "four"];
+bgColors = ["red", "green", "blue", "cyan", "magenta", "yellow"];
+txColors = ["yellow", "white", "white", "magenta", "white", "black"];
+
+ 
+c=0;
+ 
+// 3 arrays used
+function tnumbers(){//alert("Hello from tnumbers");
+    blue.textContent = tNumbers[c];
+    blue.style.color = txColors[c];
+    blue.style.backgroundColor = bgColors[c];
+    c++;
+    if(c == tNumbers.length) c=0;
+}
+
+ 
+
+var myDiv = [
+    {tnm: "zero", bgc: "red", txc: "yellow"},
+    {tnm: "one", bgc: "green", txc: "white"},
+    {tnm: "two", bgc: "blue", txc: "white"},
+]; 
+
+ 
+ 
+// array of objects used
+function tnumbers(){//alert();
+    blue.textContent = myDiv[c]["tnm"];
+    blue.style.color = myDiv[c].txc;
+    blue.style.backgroundColor = myDiv[c]["bgc"];
+    c++;
+    if(c == tNumbers.length) c=0;
+}
+
+ 
+ 
+var myDiv = {
+    st1: {tnm: "zero", bgc: "red", txc: "yellow"},
+    st2: {tnm: "one", bgc: "green", txc: "white"},
+    st3: {tnm: "two", bgc: "blue", txc: "white"},
+}; 
+ 
+// object of objects used
+function tnumbers(){//alert();
+     = object.Keys();
+    blue.textContent = myDiv[c]["tnm"];
+    blue.style.color = myDiv[c].txc;
+    blue.style.backgroundColor = myDiv[c]["bgc"];
+    c++;
+    if(c == tNumbers.length) c=0;
+}
+ 
+ 
+</script>
+ 
+</head>
+<body>
+<div id="red" class="square"></div>
+<div id="green" class="square"></div>
+<div id="blue" class="square" onclick="tnumbers()">Hi</div>
+</body>
+</html>

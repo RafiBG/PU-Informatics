@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multifunctional Timer App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #555;
+            padding: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        #englishTimerContainer,
+        #bulgarianTimerContainer,
+        #openWritingContainer {
+            width: 80%;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .timer-section textarea {
+            width: 100%;
+            height: 150px;
+            font-size: 16px;
+            resize: none;
+            margin-bottom: 10px;
+        }
+
+        .timer-section #infoMessage {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .timer-section #englishTimerDisplay,
+        .timer-section #bulgarianTimerDisplay,
+        .timer-section #openWritingTimerDisplay {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .timer-section table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .timer-section th,
+        .timer-section td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        /* Add a new style for hiding sections */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="#" onclick="showTimerSection('englishTimer'); return false;">English Timer</a>
+        <a href="#" onclick="showTimerSection('bulgarianTimer'); return false;">Bulgarian Timer</a>
+        <a href="#" onclick="showTimerSection('openWritingTimer'); return false;">Open Writing Timer</a>
+    </nav>
+
+    <main>
+        <section id="englishTimer" class="timer-section">
+            <div id="englishTimerContainer">
+                <textarea id="englishInput" oninput="checkStartStop()" onkeydown="handleKeyPress(event)"
+                    placeholder="Type the English alphabet and press Enter to start the timer"></textarea>
+                <div id="englishTimerDisplay"></div>
+                <table id="englishTriesTable">
+                    <thead>
+                        <tr>
+                            <th>Attempt</th>
+                            <th>Time (seconds)</th>
+                            <th>Successful (Under 5s)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!-- English Timer script -->
+            <script>
+                let englishTimer;
+                let englishStartTime;
+                let isEnglishTimerRunning = false;
+                let englishAttemptNumber = 1;
+                let successfulEnglishAttempts = 0;
+
+                function handleKeyPress(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault(); // Prevents the default Enter key behavior (new line)
+                        englishToggleTimer();
+                    }
+                }
+
+                function englishToggleTimer() {
+                    if (isEnglishTimerRunning) {
+                        englishStopTimer();
+                    } else {
+                        englishStartTimer();
+                    }
+                }
+
+                function englishStartTimer() {
+                    document.getElementById('englishInput').value = '';
+
+                    englishStartTime = new Date().getTime();
+                    englishTimer = setInterval(englishUpdateTimer, 10);
+                    isEnglishTimerRunning = true;
+                }
+
+                function englishStopTimer() {
+                    clearInterval(englishTimer);
+                    isEnglishTimerRunning = false;
+
+                    const elapsedTime = getEnglishElapsedTime();
+                    const isSuccessful = isEnglishAlphabetTypedCorrectly() && elapsedTime <= 5;
+
+                    englishDisplayAttempt(englishAttemptNumber, elapsedTime, isSuccessful);
+
+                    if (isSuccessful) {
+                        successfulEnglishAttempts++;
+                        document.getElementById('englishInput').value = `You made it! Congrats\nTime: ${elapsedTime.toFixed(2)} seconds`;
+                    } else {
+                        document.getElementById('englishInput').value = `Sorry, you failed\nTime: ${elapsedTime.toFixed(2)} seconds`;
+                    }
+
+                    englishAttemptNumber++;
+                }
+
+                function englishUpdateTimer() {
+                    const currentTime = new Date().getTime();
+                    const elapsedTime = (currentTime - englishStartTime) / 1000;
+
+                    document.getElementById('englishTimerDisplay').innerHTML = `Timer: ${elapsedTime.toFixed(2)} seconds`;
+                }
+
+                function getEnglishElapsedTime() {
+                    const currentTime = new Date().getTime();
+                    return (currentTime - englishStartTime) / 1000;
+                }
+
+                function isEnglishAlphabetTypedCorrectly() {
+                    const alphabetInput = document.getElementById('englishInput').value.toLowerCase();
+                    return alphabetInput === 'abcdefghijklmnopqrstuvwxyz';
+                }
+
+                function englishDisplayAttempt(attempt, time, isSuccessful) {
+                    const table = document.getElementById('englishTriesTable').getElementsByTagName('tbody')[0];
+                    const newRow = table.insertRow(table.rows.length);
+
+                    const cell1 = newRow.insertCell(0);
+                    const cell2 = newRow.insertCell(1);
+                    const cell3 = newRow.insertCell(2);
+
+                    cell1.innerHTML = attempt;
+                    cell2.innerHTML = time.toFixed(2);
+                    cell3.innerHTML = isSuccessful ? 'Yes' : 'No';
+                }
+            </script>
+        </section>
+
+        <section id="bulgarianTimer" class="timer-section hidden">
+            <div id="bulgarianTimerContainer">
+                <p id="infoMessage">Това е българската азбука.</p>
+                <textarea id="bulgarianInput" oninput="bulgarianCheckStartStop()" onkeydown="bulgarianHandleKeyPress(event)"
+                    placeholder="Напишете българската азбука и натиснете Enter, за да стартирате таймера"></textarea>
+                <div id="bulgarianTimerDisplay"></div>
+                <table id="bulgarianAttemptsTable">
+                    <thead>
+                        <tr>
+                            <th>Опит</th>
+                            <th>Време (секунди)</th>
+                            <th>Вярно написано</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!-- Bulgarian Timer script -->
+            <script>
+                let bulgarianTimer;
+                let bulgarianStartTime;
+                let isBulgarianTimerRunning = false;
+                let bulgarianAttemptNumber = 1;
+            
+                const bulgarianAlphabet = 'абвгдежзийклмнопрстуфхцчшщъьюя';
+            
+                function bulgarianHandleKeyPress(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault(); // Prevents the default Enter key behavior (new line)
+                        bulgarianToggleTimer();
+                    }
+                }
+            
+                function bulgarianToggleTimer() {
+                    if (isBulgarianTimerRunning) {
+                        bulgarianStopTimer();
+                    } else {
+                        bulgarianStartTimer();
+                    }
+                }
+            
+                function bulgarianStartTimer() {
+                    document.getElementById('bulgarianInput').value = '';
+                    document.getElementById('bulgarianTimerDisplay').innerHTML = 'Таймер: 0.00 секунди';
+            
+                    bulgarianStartTime = new Date().getTime();
+                    bulgarianTimer = setInterval(bulgarianUpdateTimer, 10);
+                    isBulgarianTimerRunning = true;
+                }
+            
+                function bulgarianStopTimer() {
+                    clearInterval(bulgarianTimer);
+                    isBulgarianTimerRunning = false;
+            
+                    const elapsedTime = getBulgarianElapsedTime();
+                    const isSuccessful = isBulgarianAlphabetTypedCorrectly();
+            
+                    document.getElementById('bulgarianInput').value = isSuccessful
+                        ? `Браво ти успя!\nВреме: ${elapsedTime.toFixed(2)} секунди`
+                        : `Ти не успя.\nВреме: ${elapsedTime.toFixed(2)} секунди`;
+            
+                    bulgarianDisplayAttempt(bulgarianAttemptNumber, elapsedTime, isSuccessful);
+            
+                    bulgarianAttemptNumber++;
+                }
+            
+                function bulgarianUpdateTimer() {
+                    const currentTime = new Date().getTime();
+                    const elapsedTime = (currentTime - bulgarianStartTime) / 1000;
+            
+                    document.getElementById('bulgarianTimerDisplay').innerHTML = `Таймер: ${elapsedTime.toFixed(2)} секунди`;
+                }
+            
+                function getBulgarianElapsedTime() {
+                    const currentTime = new Date().getTime();
+                    return (currentTime - bulgarianStartTime) / 1000;
+                }
+            
+                function isBulgarianAlphabetTypedCorrectly() {
+                    const bulgarianInput = document.getElementById('bulgarianInput').value.toLowerCase();
+                    return bulgarianAlphabet.split('').every(char => bulgarianInput.includes(char));
+                }
+            
+                function bulgarianDisplayAttempt(attempt, time, isSuccessful) {
+                    const table = document.getElementById('bulgarianAttemptsTable').getElementsByTagName('tbody')[0];
+                    const newRow = table.insertRow(table.rows.length);
+            
+                    const cell1 = newRow.insertCell(0);
+                    const cell2 = newRow.insertCell(1);
+                    const cell3 = newRow.insertCell(2);
+            
+                    cell1.innerHTML = attempt;
+                    cell2.innerHTML = time.toFixed(2);
+                    cell3.innerHTML = isSuccessful ? 'Да' : 'Не';
+                }
+            </script>
+        </section>
+
+        <section id="openWritingTimer" class="timer-section hidden">
+            <div id="openWritingContainer">
+                <p>Раздел за Отворено Писане.</p>
+                <textarea id="openWritingInput" oninput="checkStartStop()" onkeydown="handleKeyPress(event)"
+                    placeholder="Напишете текста и натиснете Enter, за да стартирате таймера"></textarea>
+                <textarea id="comparisonInput" placeholder="Сравнение с вашия текст"></textarea>
+                <div id="openWritingTimerDisplay">Таймер: 0.00 секунди</div>
+                
+                <table id="openWritingAttemptsTable">
+                    <thead>
+                        <tr>
+                            <th>Опит</th>
+                            <th>Време (секунди)</th>
+                            <th>Вярно написано</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+        
+        <!-- Open Writing Timer script -->
+<!-- Open Writing Timer script -->
+<script>
+    let openWritingTimer;
+    let openWritingStartTime;
+    let isOpenWritingTimerRunning = false;
+    let openWritingAttemptNumber = 1;
+
+    function openWritingStartTimer() {
+        document.getElementById('openWritingInput').value = '';
+        document.getElementById('openWritingTimerDisplay').innerHTML = 'Таймер: 0.00 секунди';
+
+        openWritingStartTime = new Date().getTime();
+        openWritingTimer = setInterval(openWritingUpdateTimer, 10);
+        isOpenWritingTimerRunning = true;
+    }
+
+    function openWritingStopTimer() {
+        clearInterval(openWritingTimer);
+        isOpenWritingTimerRunning = false;
+
+        const elapsedTime = getOpenWritingElapsedTime();
+        const isSuccessful = isOpenWritingTypedCorrectly();
+
+        document.getElementById('openWritingInput').value = isSuccessful
+            ? `Браво ти успя!\nВреме: ${elapsedTime.toFixed(2)} секунди`
+            : `Ти не успя.\nВреме: ${elapsedTime.toFixed(2)} секунди`;
+
+        openWritingDisplayAttempt(openWritingAttemptNumber, elapsedTime, isSuccessful);
+
+        openWritingAttemptNumber++;
+    }
+
+    function openWritingUpdateTimer() {
+        const currentTime = new Date().getTime();
+        const elapsedTime = (currentTime - openWritingStartTime) / 1000;
+
+        document.getElementById('openWritingTimerDisplay').innerHTML = `Таймер: ${elapsedTime.toFixed(2)} секунди`;
+    }
+
+    function getOpenWritingElapsedTime() {
+        const currentTime = new Date().getTime();
+        return (currentTime - openWritingStartTime) / 1000;
+    }
+
+    function isOpenWritingTypedCorrectly() {
+        const openWritingInput = document.getElementById('openWritingInput').value.toLowerCase();
+        const comparisonText = document.getElementById('comparisonInput').value.toLowerCase();
+
+        return openWritingInput === comparisonText;
+    }
+
+    function openWritingDisplayAttempt(attempt, time, isSuccessful) {
+        const table = document.getElementById('openWritingAttemptsTable').getElementsByTagName('tbody')[0];
+        const newRow = table.insertRow(table.rows.length);
+
+        const cell1 = newRow.insertCell(0);
+        const cell2 = newRow.insertCell(1);
+        const cell3 = newRow.insertCell(2);
+
+        cell1.innerHTML = attempt;
+        cell2.innerHTML = time.toFixed(2);
+        cell3.innerHTML = isSuccessful ? 'Да' : 'Не';
+    }
+
+    // Event listener for Enter key press
+    document.getElementById('openWritingInput').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === 'Go') {
+            event.preventDefault(); // Prevents the default Enter key behavior (new line)
+            isOpenWritingTimerRunning ? openWritingStopTimer() : openWritingStartTimer();
+        }
+    });
+</script>
+
+
+        </section>
+
+        <script>
+            function showTimerSection(sectionId) {
+                const timerSections = document.querySelectorAll('.timer-section');
+
+                timerSections.forEach(section => {
+                    if (section.id === sectionId) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+            }
+        </script>
+    </main>
+</body>
+
+</html>

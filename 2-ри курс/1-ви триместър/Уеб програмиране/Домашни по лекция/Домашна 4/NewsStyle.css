@@ -1,0 +1,28 @@
+body{
+  background-image: url(images/1.gif), url(images/paper.jpg);
+  background-position: right bottom, left bottom;
+  background-repeat: no-repeat, repeat;
+  background-size: 50% 50%;
+}
+
+#p1{
+    color:red;
+    font-size: 30px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#p2{
+    color:green;
+    font-size: 50px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#p3{
+    color:blue;
+    font-size: 100px;
+    font-family:'Times New Roman', Times, serif;
+}
+a:link{ color:chartreuse;}
+a:visited{ color: rgb(239, 5, 239); }
+a:hover{ color: rgb(245, 104, 4); }
+a:active { color: rgb(222, 16, 26); }

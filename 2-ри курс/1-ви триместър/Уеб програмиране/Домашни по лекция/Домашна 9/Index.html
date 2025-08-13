@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        #timer {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        #resetButton {
+            font-size: 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        #puzzle {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .cell {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            border: 1px solid #343434;
+            cursor: pointer;
+        }
+
+        .empty {
+            background-color: #6e6a6a;
+        }
+
+        .correct {
+            background-color: #8aff80;
+        }
+
+        #leaderboard {
+            margin-top: 10px;
+        }
+
+        #leaderboard table {
+            width: 300px;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        #leaderboard th, #leaderboard td {
+            border: 1px solid #343434;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+    <title>Пъзел игра</title>
+</head>
+<body>
+
+<div id="timer">Таймер: 0 секунди</div>
+<button id="resetButton">Рестарт</button>
+<div id="puzzle"></div>
+<div id="leaderboard">
+    <h2>Топ 5 резултати</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Място</th>
+                <th>Време</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboardBody"></tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const puzzleSize = 4;
+        const totalCells = puzzleSize * puzzleSize;
+
+        let puzzle;
+        let startTime;
+        let timerInterval;
+        let leaderboard = [];
+
+        const timerElement = document.getElementById('timer');
+        const puzzleElement = document.getElementById('puzzle');
+        const resetButton = document.getElementById('resetButton');
+        const leaderboardBody = document.getElementById('leaderboardBody');
+
+        initializePuzzle();
+
+        resetButton.addEventListener('click', initializePuzzle);
+
+        function initializePuzzle() {
+            leaderboard = [];
+            do {
+                puzzle = Array.from({ length: totalCells }, (_, index) => index + 1);
+                puzzle.pop();
+                puzzle.push(null);
+                shuffleArray(puzzle);
+            } while (!isSolvable(puzzle));
+
+            startTime = null;
+            updateTimerDisplay();
+            updatePuzzleDisplay();
+            resetLeaderboard();
+        }
+
+        function isSolvable(puzzle) {
+            let inversions = 0;
+            for (let i = 0; i < puzzle.length - 1; i++) {
+                for (let j = i + 1; j < puzzle.length; j++) {
+                    if (puzzle[i] && puzzle[j] && puzzle[i] > puzzle[j]) {
+                        inversions++;
+                    }
+                }
+            }
+            const puzzleSizeEven = puzzleSize % 2 === 0;
+            const emptyRowFromBottom = Math.floor(puzzle.indexOf(null) / puzzleSize) + 1;
+            return (inversions % 2 === 0 && puzzleSizeEven && emptyRowFromBottom % 2 === 1) ||
+                   (inversions % 2 === 1 && puzzleSizeEven);
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function moveTile(event) {
+            const index = parseInt(event.target.dataset.tileIndex);
+            if (!startTime) {
+                startTime = Date.now();
+                timerInterval = setInterval(updateTimer, 100);
+            }
+
+            const emptyIndex = puzzle.indexOf(null);
+            const row = Math.floor(index / puzzleSize);
+            const col = index % puzzleSize;
+            const emptyRow = Math.floor(emptyIndex / puzzleSize);
+            const emptyCol = emptyIndex % puzzleSize;
+            if ((Math.abs(row - emptyRow) === 1 && col === emptyCol) || (Math.abs(col - emptyCol) === 1 && row === emptyRow)) {
+                [puzzle[index], puzzle[emptyIndex]] = [puzzle[emptyIndex], puzzle[index]];
+                updatePuzzleDisplay();
+            }
+
+            if (puzzle.every((value, index) => value === index + 1 || value === null)) {
+                clearInterval(timerInterval);
+                updateLeaderboard();
+            }
+        }
+
+        function updateTimer() {
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const elapsedTime = getElapsedTime();
+            timerElement.textContent = `Таймер: ${elapsedTime} секунди`;
+        }
+
+        function getElapsedTime() {
+            return startTime ? Math.floor((Date.now() - startTime) / 1000) : 0;
+        }
+
+        function updatePuzzleDisplay() {
+            puzzleElement.innerHTML = '';
+            for (let i = 0; i < totalCells; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.tileIndex = i;
+                if (puzzle[i] === null) {
+                    cell.classList.add('empty');
+                    cell.textContent = '';
+                } else {
+                    cell.textContent = puzzle[i];
+                    if (puzzle[i] === i + 1) {
+                        cell.classList.add('correct');
+                    }
+                    cell.addEventListener('click', moveTile);
+                }
+                puzzleElement.appendChild(cell);
+            }
+        }
+
+        function updateLeaderboard() {
+            const elapsedTime = getElapsedTime();
+            if (elapsedTime > 0) {
+                leaderboard.push(elapsedTime);
+                leaderboard.sort((a, b) => a - b);
+                const topTimes = leaderboard.slice(0, 5);
+                leaderboardBody.innerHTML = '';
+                topTimes.forEach((time, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${index + 1}</td><td>${time}</td>`;
+                    leaderboardBody.appendChild(row);
+                });
+            }
+        }
+
+        function resetLeaderboard() {
+            leaderboard = [];
+            updateLeaderboard();
+        }
+    });
+</script>
+
+</body>
+</html>

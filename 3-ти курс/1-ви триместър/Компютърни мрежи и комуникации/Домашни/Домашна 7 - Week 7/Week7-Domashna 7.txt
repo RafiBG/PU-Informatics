@@ -1,0 +1,287 @@
+Plovdiv(config-subif)#
+Plovdiv(config-subif)#ip add
+Plovdiv(config-subif)#ip address 192.168.10.1 255.255.255.128
+Plovdiv(config-subif)#no shut
+Plovdiv(config-subif)#int fa0/0.20
+Plovdiv(config-subif)#en
+Plovdiv(config-subif)#encapsulation d
+Plovdiv(config-subif)#encapsulation dot1Q 20
+Plovdiv(config-subif)#ip add
+Plovdiv(config-subif)#ip address 192.168.10.129 255.255.255.128
+Plovdiv(config-subif)#no shut
+Plovdiv(config-subif)#exit
+Plovdiv(config)#do wr
+Building configuration...
+[OK]
+Plovdiv(config)#ip dhcp pool vlan10
+Plovdiv(dhcp-config)#netw
+Plovdiv(dhcp-config)#network 192.168.10.0 255.255.255.128
+Plovdiv(dhcp-config)#def
+Plovdiv(dhcp-config)#default-router 192.168.10.1
+Plovdiv(dhcp-config)#dns
+Plovdiv(dhcp-config)#dns-server 192.168.10.1
+Plovdiv(dhcp-config)#dom
+Plovdiv(dhcp-config)#domain-name test.com
+Plovdiv(dhcp-config)#lea
+Plovdiv(dhcp-config)#lease 3 12 29
+Plovdiv(dhcp-config)#exit
+Plovdiv(config)#ip dhcp pool vlan20
+Plovdiv(dhcp-config)#netw
+Plovdiv(dhcp-config)#network 192.168.10.128 255.255.255.128
+Plovdiv(dhcp-config)#dns
+Plovdiv(dhcp-config)#dns-server 192.168.10.129
+Plovdiv(dhcp-config)#def
+Plovdiv(dhcp-config)#default-router 192.168.10.129
+Plovdiv(dhcp-config)#dom
+Plovdiv(dhcp-config)#domain-name test.com
+Plovdiv(dhcp-config)#lease 3 12 59
+Plovdiv(dhcp-config)#exit
+Plovdiv(config)#do wr
+Building configuration...
+[OK]
+Plovdiv(config)#ip dhcp ex
+Plovdiv(config)#ip dhcp excluded-address 192.168.10.1 192.168.10.10
+Plovdiv(config)#ip dhcp excluded-address 192.168.10.129 192.168.10.133
+Plovdiv(config)#do wr
+Plovdiv(config)#do wr
+Building configuration...
+[OK]
+Plovdiv(config)#int s0/0
+Plovdiv(config-if)#ip add
+Plovdiv(config-if)#ip address 192.168.1.1 255.255.255.252
+Plovdiv(config-if)#no shut
+Plovdiv(config-if)#
+*Mar  1 00:25:55.727: %LINK-3-UPDOWN: Interface Serial0/0, changed state to up
+*Mar  1 00:25:56.727: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0,                                          changed state to up
+Plovdiv(config-if)#do wr
+Building configuration...
+[OK]
+Plovdiv(config-if)#
+*Mar  1 00:26:22.139: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0,                                          changed state to down
+Plovdiv(config-if)#
+*Mar  1 00:28:02.131: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0,                                          changed state to up
+Plovdiv(config-if)#exit
+Plovdiv(config)#ip routing
+Plovdiv(config)#rou
+Plovdiv(config)#router rip
+Plovdiv(config-router)#ver 2
+Plovdiv(config-router)#netw
+Plovdiv(config-router)#network 192.168.10.0
+Plovdiv(config-router)#network 192.168.1.0
+Plovdiv(config-router)#do wr
+Building configuration...
+[OK]
+Plovdiv(config-router)#exit
+Plovdiv(config)#exit
+
+Plovdiv#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Plovdiv(config)#
+*Mar  1 01:12:22.131: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0, changed state to up
+Plovdiv(config)#ip routing
+Plovdiv(config)#router rip
+Plovdiv(config-router)#ver 2
+Plovdiv(config-router)#netw
+Plovdiv(config-router)#network 192.168.10.0
+Plovdiv(config-router)#network 192.168.1.0
+Plovdiv(config-router)#do wr
+Building configuration...
+[OK]
+Plovdiv(config-router)#exit
+Plovdiv(config)#exit
+Plovdiv#sho
+*Mar  1 01:21:45.015: %SYS-5-CONFIG_I: Configured from console by console
+Plovdiv#show ip rou
+Codes: C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+R    192.168.30.0/24 [120/1] via 192.168.1.2, 00:00:10, Serial0/0
+     192.168.10.0/25 is subnetted, 2 subnets
+C       192.168.10.0 is directly connected, FastEthernet0/0.10
+C       192.168.10.128 is directly connected, FastEthernet0/0.20
+R    192.168.20.0/24 [120/1] via 192.168.1.2, 00:00:10, Serial0/0
+     192.168.1.0/30 is subnetted, 1 subnets
+C       192.168.1.0 is directly connected, Serial0/0
+Plovdiv#
+
+Sofia#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Sofia(config)#int s0/0
+Sofia(config-if)#ip add
+Sofia(config-if)#ip address 192.168.1.2 255.255.255.252
+Sofia(config-if)#no shut
+Sofia(config-if)#e
+*Mar  1 00:02:18.887: %LINK-3-UPDOWN: Interface Serial0/0, changed state to up
+*Mar  1 00:02:19.887: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0, changed state to up
+Sofia(config-if)#exit
+Sofia(config)#ip dhcp
+% Incomplete command.
+
+Sofia(config)#ip dhcp pool sof
+Sofia(dhcp-config)#netw
+Sofia(dhcp-config)#network 192.168.20.0 255.255.255.0
+Sofia(dhcp-config)#dns
+Sofia(dhcp-config)#dns-server 192.168.20.1
+Sofia(dhcp-config)#def
+Sofia(dhcp-config)#default-router 192.168.20.1
+Sofia(dhcp-config)#dom
+Sofia(dhcp-config)#domain-name test.com
+Sofia(dhcp-config)#le
+Sofia(dhcp-config)#lease 3 12 59
+Sofia(dhcp-config)#exit
+Sofia(config)#ip dhcp ex
+Sofia(config)#ip dhcp excluded-address 192.168.20.1 192.168.20.10
+Sofia(config)#do wr
+Building configuration...
+[OK]
+Sofia(config)#int fa0/0
+Sofia(config-if)#ip add
+Sofia(config-if)#ip address 192.168.20.1 255.255.255.0
+Sofia(config-if)#no shut
+Sofia(config-if)#do wr
+Building configuration...
+[OK]
+Sofia(config-if)#
+*Mar  1 00:04:46.855: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:04:47.867: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+Sofia(config-if)#int fa0/1
+Sofia(config-if)#ip add
+Sofia(config-if)#ip address 192.168.30.1 255.255.255.252
+Sofia(config-if)#no shut
+Sofia(config-if)#do wr
+Building configuration...
+[OK]
+Sofia(config-if)#
+*Mar  1 00:05:24.819: %LINK-3-UPDOWN: Interface FastEthernet0/1, changed state to up
+*Mar  1 00:05:25.819: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+Sofia(config-if)#exit
+Sofia(config)#ip routing
+Sofia(config)#router rip
+Sofia(config-router)#ver 2
+Sofia(config-router)#netw
+Sofia(config-router)#network 192.168.20.0
+Sofia(config-router)#network 192.168.30.0
+Sofia(config-router)#network 192.168.1.0
+Sofia(config-router)#do wr
+Building configuration...
+[OK]
+Sofia(config-router)#exit
+Sofia(config)#exit
+Sofia#
+*Mar  1 00:11:11.515: %SYS-5-CONFIG_I: Configured from console by console
+Sofia#show ip rou
+Codes: C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     192.168.30.0/30 is subnetted, 1 subnets
+C       192.168.30.0 is directly connected, FastEthernet0/1
+R    192.168.10.0/24 [120/1] via 192.168.1.1, 00:00:13, Serial0/0
+C    192.168.20.0/24 is directly connected, FastEthernet0/0
+     192.168.1.0/30 is subnetted, 1 subnets
+C       192.168.1.0 is directly connected, Serial0/0
+Sofia#
+
+Server> ip 192.168.30.2 255.255.255.252 192.168.30.1
+Checking for duplicate address...
+PC1 : 192.168.30.2 255.255.255.252 gateway 192.168.30.1
+
+Server> ping 192.168.10.11
+192.168.10.11 icmp_seq=1 timeout
+192.168.10.11 icmp_seq=2 timeout
+84 bytes from 192.168.10.11 icmp_seq=3 ttl=62 time=93.031 ms
+84 bytes from 192.168.10.11 icmp_seq=4 ttl=62 time=92.830 ms
+84 bytes from 192.168.10.11 icmp_seq=5 ttl=62 time=91.770 ms
+
+Server> ping 192.168.10.135
+192.168.10.135 icmp_seq=1 timeout
+192.168.10.135 icmp_seq=2 timeout
+84 bytes from 192.168.10.135 icmp_seq=3 ttl=62 time=76.221 ms
+84 bytes from 192.168.10.135 icmp_seq=4 ttl=62 time=91.027 ms
+84 bytes from 192.168.10.135 icmp_seq=5 ttl=62 time=77.127 ms
+
+Server> ping 192.168.20.11
+192.168.20.11 icmp_seq=1 timeout
+192.168.20.11 icmp_seq=2 timeout
+84 bytes from 192.168.20.11 icmp_seq=3 ttl=63 time=60.974 ms
+84 bytes from 192.168.20.11 icmp_seq=4 ttl=63 time=61.404 ms
+84 bytes from 192.168.20.11 icmp_seq=5 ttl=63 time=61.255 ms
+
+Server> ping 192.168.20.12
+192.168.20.12 icmp_seq=1 timeout
+192.168.20.12 icmp_seq=2 timeout
+84 bytes from 192.168.20.12 icmp_seq=3 ttl=63 time=61.669 ms
+84 bytes from 192.168.20.12 icmp_seq=4 ttl=63 time=61.126 ms
+84 bytes from 192.168.20.12 icmp_seq=5 ttl=63 time=61.230 ms
+
+Server> ping 192.168.1.1
+84 bytes from 192.168.1.1 icmp_seq=1 ttl=254 time=45.459 ms
+84 bytes from 192.168.1.1 icmp_seq=2 ttl=254 time=61.097 ms
+84 bytes from 192.168.1.1 icmp_seq=3 ttl=254 time=60.426 ms
+84 bytes from 192.168.1.1 icmp_seq=4 ttl=254 time=46.171 ms
+84 bytes from 192.168.1.1 icmp_seq=5 ttl=254 time=45.985 ms
+
+Server> ping 192.168.1.2
+84 bytes from 192.168.1.2 icmp_seq=1 ttl=255 time=30.178 ms
+84 bytes from 192.168.1.2 icmp_seq=2 ttl=255 time=30.729 ms
+84 bytes from 192.168.1.2 icmp_seq=3 ttl=255 time=30.518 ms
+84 bytes from 192.168.1.2 icmp_seq=4 ttl=255 time=29.952 ms
+84 bytes from 192.168.1.2 icmp_seq=5 ttl=255 time=30.650 ms
+
+
+PC5> ip dhcp
+DDORA IP 192.168.20.11/24 GW 192.168.20.1
+
+PC5> ping 192.168.20.12
+84 bytes from 192.168.20.12 icmp_seq=1 ttl=64 time=0.563 ms
+84 bytes from 192.168.20.12 icmp_seq=2 ttl=64 time=0.548 ms
+84 bytes from 192.168.20.12 icmp_seq=3 ttl=64 time=0.530 ms
+84 bytes from 192.168.20.12 icmp_seq=4 ttl=64 time=0.735 ms
+84 bytes from 192.168.20.12 icmp_seq=5 ttl=64 time=0.664 ms
+
+PC5> ping 192.168.30.2
+192.168.30.2 icmp_seq=1 timeout
+84 bytes from 192.168.30.2 icmp_seq=2 ttl=63 time=61.804 ms
+84 bytes from 192.168.30.2 icmp_seq=3 ttl=63 time=62.010 ms
+84 bytes from 192.168.30.2 icmp_seq=4 ttl=63 time=61.246 ms
+84 bytes from 192.168.30.2 icmp_seq=5 ttl=63 time=47.059 ms
+
+PC1> ip dhcp
+PC1> ip dhcp
+DORA IP 192.168.10.11/25 GW 192.168.10.1
+
+PC1> ping 192.168.10.135
+192.168.10.135 icmp_seq=1 timeout
+192.168.10.135 icmp_seq=2 timeout
+84 bytes from 192.168.10.135 icmp_seq=3 ttl=63 time=61.896 ms
+84 bytes from 192.168.10.135 icmp_seq=4 ttl=63 time=62.447 ms
+84 bytes from 192.168.10.135 icmp_seq=5 ttl=63 time=62.862 ms
+
+PC1> ping 192.168.20.12
+192.168.20.12 icmp_seq=1 timeout
+192.168.20.12 icmp_seq=2 timeout
+84 bytes from 192.168.20.12 icmp_seq=3 ttl=62 time=91.355 ms
+84 bytes from 192.168.20.12 icmp_seq=4 ttl=62 time=91.503 ms
+84 bytes from 192.168.20.12 icmp_seq=5 ttl=62 time=61.242 ms
+
+PC1> ping 192.168.30.2
+192.168.30.2 icmp_seq=1 timeout
+192.168.30.2 icmp_seq=2 timeout
+84 bytes from 192.168.30.2 icmp_seq=3 ttl=62 time=92.765 ms
+84 bytes from 192.168.30.2 icmp_seq=4 ttl=62 time=91.688 ms
+84 bytes from 192.168.30.2 icmp_seq=5 ttl=62 time=93.910 ms
+
+

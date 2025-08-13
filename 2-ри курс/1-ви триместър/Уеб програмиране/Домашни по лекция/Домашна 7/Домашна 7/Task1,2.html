@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html lang="bg">
+<head>
+  <title>Задача 1 и 2</title>
+<style>
+*{background-color: #ccc7c7;}
+
+ul {
+  position: relative;
+  top: -11px;
+  width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 26px;
+  text-decoration: none;
+  background-color: #333;
+}
+
+li a:hover {
+  background-color: rgb(42, 89, 183);
+}
+.draggable {
+    float: left;
+    width: 60px;
+    height: 14px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+  }
+
+#droppableContainerBig {
+    position: relative;
+    top: 190px;
+    width: 80%;
+    height: 100px;
+    border: 2px dashed black;
+    margin-top: 20px;
+    padding: 10px;
+  }
+.droppableContainerSmall {
+    border: 2px dashed black;
+    margin-top: 0px;
+    padding: 5px;
+    z-index: 1;
+  }
+#smallContainer1 {
+    position: relative;
+    top: 360px;
+    left: 135px;
+    width: 7%;
+    height: 50px;
+  }
+
+#smallContainer2 {
+    position: relative;
+    top: 400px;
+    left: -5px;
+    width: 7%;
+    height: 50px;
+  }
+
+#smallContainer3 {
+    position: relative;
+    top: 340px;
+    left: 450px;
+    width: 7%;
+    height: 50px;
+  }
+
+#text1 {
+    position: relative;
+    top: 170px;
+    font-size: 20px;
+    z-index: 0;
+  }
+
+#text2 {
+    position: relative;
+    top: 235px;
+    left: 110px;
+    font-size: 20px;
+    z-index: 0;
+  }
+</style>
+<script>
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    var draggedElement = document.getElementById(data);
+    ev.target.appendChild(draggedElement);
+  }
+</script>
+</head>
+<body>
+
+    <ul>
+        <li><a href="Task1,2.html">Задача 1,2</a></li>
+        <li><a href="Task3,4.html">Задача 3,4</a></li>
+        <li><a href="Task5,6.html">Задача 5,6</a></li>
+    </ul>
+
+<div id="draggableContainer">
+  <div id="word1" class="draggable" draggable="true" ondragstart="drag(event)">разбивам</div>
+  <div id="word2" class="draggable" draggable="true" ondragstart="drag(event)">пух</div>
+  <div id="word3" class="draggable" draggable="true" ondragstart="drag(event)">на</div>
+  <div id="word4" class="draggable" draggable="true" ondragstart="drag(event)">прах</div>
+  <div id="word5" class="draggable" draggable="true" ondragstart="drag(event)">и</div>
+
+  <div id="word6" class="draggable" draggable="true" ondragstart="drag(event)">камък</div>
+  <div id="word7" class="draggable" draggable="true" ondragstart="drag(event)">удрям</div>
+
+  <div id="word6" class="draggable" draggable="true" ondragstart="drag(event)">бяло</div>
+  <div id="word7" class="draggable" draggable="true" ondragstart="drag(event)">черно</div>
+  
+  <div id="word8" class="draggable" draggable="true" ondragstart="drag(event)">думи</div>
+  <div id="word9" class="draggable" draggable="true" ondragstart="drag(event)">Нашата</div>
+  <div id="word10" class="draggable" draggable="true" ondragstart="drag(event)">нашето</div>
+
+</div>
+
+<div id="droppableContainerBig" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+<div id="smallContainer1" class="droppableContainerSmall" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div id="smallContainer2" class="droppableContainerSmall" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<div id="smallContainer3" class="droppableContainerSmall" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+
+<pre id="text1">България с             не може да се опише.</pre>
+<pre id="text2">  Родина е най-скъпото място в          сърце!</pre>
+</body>
+</html>

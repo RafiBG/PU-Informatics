@@ -1,0 +1,792 @@
+ESW1#vlan database
+ESW1(vlan)#vlan 10 name administration
+VLAN 10 added:
+    Name: administration
+ESW1(vlan)#vlan 20 name sales
+VLAN 20 added:
+    Name: sales
+ESW1(vlan)#exit
+APPLY completed.
+Exiting....
+ESW1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+ESW1(config)#int fa1/15
+ESW1(config-if)#switchport mode trunk
+ESW1(config-if)#no shut
+ESW1(config-if)#
+*Mar  1 00:01:02.607: %DTP-5-TRUNKPORTON: Port Fa1/15 has become dot1q trunk
+ESW1(config-if)#no shut
+ESW1(config-if)#exit
+ESW1(config)#int fa1/0
+ESW1(config-if)#switchport mode access
+ESW1(config-if)#switchport access vlan 10
+ESW1(config-if)#no shut
+ESW1(config-if)#exit
+ESW1(config)#int fa1/1
+ESW1(config-if)#switchport mode access
+ESW1(config-if)#switchport access vlan 10
+ESW1(config-if)#no shut
+ESW1(config-if)#exit
+ESW1(config)#int fa1/2
+ESW1(config-if)#switchport mode access
+ESW1(config-if)#switchport access vlan 20
+ESW1(config-if)#no shut
+ESW1(config-if)#exit
+ESW1(config)#int fa1/3
+ESW1(config-if)#switchport mode access
+ESW1(config-if)#switchport access vlan 20
+ESW1(config-if)#no shut
+ESW1(config-if)#exit
+ESW1(config)#exit
+ESW1#show
+*Mar  1 00:30:17.819: %SYS-5-CONFIG_I: Configured from console by console
+ESW1#show run
+Building configuration...
+
+Current configuration : 2598 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+no service dhcp
+!
+hostname ESW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+memory-size iomem 5
+ip subnet-zero
+no ip routing
+no ip icmp rate-limit unreachable
+no ip cef
+ip tcp synwait-time 5
+!
+!
+no ip domain lookup
+!
+vtp file nvram:vlan.dat
+
+!
+!
+interface FastEthernet0/0
+ description *** Unused for Layer2 EtherSwitch ***
+ no ip address
+ no ip route-cache
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ description *** Unused for Layer2 EtherSwitch ***
+ no ip address
+ no ip route-cache
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/0
+ switchport access vlan 10
+ duplex full
+ speed 100
+!
+interface FastEthernet1/1
+ switchport access vlan 10
+ duplex full
+ speed 100
+!
+interface FastEthernet1/2
+ switchport access vlan 20
+ duplex full
+ speed 100
+!
+interface FastEthernet1/3
+ switchport access vlan 20
+ duplex full
+ speed 100
+!
+interface FastEthernet1/4
+ duplex full
+ speed 100
+!
+interface FastEthernet1/5
+ duplex full
+ speed 100
+!
+interface FastEthernet1/6
+ duplex full
+ speed 100
+!
+interface FastEthernet1/7
+ duplex full
+ speed 100
+!
+interface FastEthernet1/8
+ duplex full
+ speed 100
+!
+interface FastEthernet1/9
+ duplex full
+ speed 100
+!
+interface FastEthernet1/10
+ duplex full
+ speed 100
+!
+interface FastEthernet1/11
+ duplex full
+ speed 100
+!
+interface FastEthernet1/12
+ duplex full
+ speed 100
+!
+interface FastEthernet1/13
+ duplex full
+ speed 100
+!
+interface FastEthernet1/14
+ duplex full
+ speed 100
+!
+interface FastEthernet1/15
+ switchport mode trunk
+ duplex full
+ speed 100
+!
+interface Vlan1
+ no ip address
+ no ip route-cache
+ shutdown
+!
+ip classless
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+control-plane
+!
+!
+banner exec ^C
+
+***************************************************************
+This is a normal Router with a SW module inside (NM-16ESW)
+It has been preconfigured with hard coded speed and duplex
+
+To create vlans use the command "vlan database" from exec mode
+After creating all desired vlans use "exit" to apply the config
+
+To view existing vlans use the command "show vlan-switch brief"
+
+Warning: You are using an old IOS image for this router.
+Please update the IOS to enable the "macro" command!
+***************************************************************
+
+^C
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
+
+Plovdiv#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Plovdiv(config)#int fa0/0
+Plovdiv(config-if)#no ip address
+Plovdiv(config-if)#no shut
+Plovdiv(config-if)#
+*Mar  1 00:04:14.659: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:04:15.659: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+Plovdiv(config-if)#int fa0/0.10
+Plovdiv(config-subif)#enc
+Plovdiv(config-subif)#encapsulation dot
+Plovdiv(config-subif)#encapsulation dot1Q 10
+
+If the interface doesn't support baby giant frames
+maximum mtu of the interface has to be reduced by 4
+bytes on both sides of the connection to properly
+transmit or receive large packets. Please refer to
+documentation on configuring IEEE 802.1Q vLANs.
+
+Plovdiv(config-subif)#ip add
+Plovdiv(config-subif)#ip address
+*Mar  1 00:04:33.915: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+Plovdiv(config-subif)#ip address 192.168.10.1 255.255.255.128
+Plovdiv(config-subif)#no shut
+Plovdiv(config-subif)#int fa 0/0.20
+Plovdiv(config-subif)#enc
+Plovdiv(config-subif)#encapsulation dot
+Plovdiv(config-subif)#encapsulation dot1Q 20
+Plovdiv(config-subif)#ip add
+Plovdiv(config-subif)#ip address 192.168.10.129 255.255.255.128
+Plovdiv(config-subif)#no shut
+Plovdiv(config-subif)#do wr
+Building configuration...
+[OK]
+Plovdiv(config-subif)#exit
+Plovdiv(config)#ip dhcp pool vlan10
+Plovdiv(dhcp-config)#network 192.168.10.0 255.255.255.128
+Plovdiv(dhcp-config)#dns
+Plovdiv(dhcp-config)#dns-server 192.168.10.1
+Plovdiv(dhcp-config)#def
+Plovdiv(dhcp-config)#default-router 192.168.10.1
+Plovdiv(dhcp-config)#doma
+Plovdiv(dhcp-config)#domain-name test.com
+Plovdiv(dhcp-config)#lease 3 12 59
+Plovdiv(dhcp-config)#exit
+Plovdiv(config)#ip dhcp pool vlan20
+Plovdiv(dhcp-config)#network 192.168.10.128 255.255.255.128
+Plovdiv(dhcp-config)#dns-server 192.168.10.129
+Plovdiv(dhcp-config)#default-router 192.168.10.129
+Plovdiv(dhcp-config)#domain-name test.com
+Plovdiv(dhcp-config)#lease 3 12 59
+Plovdiv(dhcp-config)#exit
+Plovdiv(config)#ip dhcp excl
+Plovdiv(config)#ip dhcp excl
+Plovdiv(config)#ip dhcp excluded-address 192.168.10.1 192.168.10.5
+Plovdiv(config)#ip dhcp excluded-address 192.168.10.129 192.168.10.133
+Plovdiv(config)#do wr
+Building configuration...
+[OK]
+Plovdiv(config)#int s0/0
+Plovdiv(config-if)#ip add
+Plovdiv(config-if)#ip address 192.168.1.1 255.255.255.252
+Plovdiv(config-if)#no shut
+Plovdiv(config-if)#
+*Mar  1 00:10:27.443: %LINK-3-UPDOWN: Interface Serial0/0, changed state to up
+*Mar  1 00:10:28.443: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0, changed state to up
+Plovdiv(config-if)#int s0/1
+Plovdiv(config-if)#ip add
+Plovdiv(config-if)#ip address 192.168.1.9 255.255.255.252
+Plovdiv(config-if)#no shut
+Plovdiv(config-if)#
+*Mar  1 00:10:52.491: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0, changed state to down
+Plovdiv(config-if)#
+*Mar  1 00:10:54.179: %LINK-3-UPDOWN: Interface Serial0/1, changed state to up
+*Mar  1 00:10:55.179: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1, changed state to up
+Plovdiv(config-if)#exit
+Plovdiv(config)#ip routing
+Plovdiv(config)#router rip
+Plovdiv(config-router)#ver 2
+Plovdiv(config-router)#
+*Mar  1 00:11:22.519: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1, changed state to down
+Plovdiv(config-router)#network 192.168.10.0
+Plovdiv(config-router)#network 192.168.10.128
+Plovdiv(config-router)#network 192.168.1.0
+Plovdiv(config-router)#network 192.168.1.8
+Plovdiv(config-router)#do wr
+Building configuration...
+[OK]
+Plovdiv(config-router)#
+*Mar  1 00:16:02.483: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0, changed state to up
+Plovdiv(config-router)#
+*Mar  1 00:19:42.511: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1, changed state to up
+Plovdiv(config-router)#do show ip rou
+Plovdiv(config-router)#do show ip rou
+Codes: C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+R    192.168.30.0/24 [120/1] via 192.168.1.10, 00:00:21, Serial0/1
+     192.168.10.0/25 is subnetted, 2 subnets
+C       192.168.10.0 is directly connected, FastEthernet0/0.10
+C       192.168.10.128 is directly connected, FastEthernet0/0.20
+R    192.168.20.0/24 [120/1] via 192.168.1.2, 00:00:23, Serial0/0
+     192.168.1.0/30 is subnetted, 3 subnets
+C       192.168.1.8 is directly connected, Serial0/1
+C       192.168.1.0 is directly connected, Serial0/0
+R       192.168.1.4 [120/1] via 192.168.1.10, 00:00:23, Serial0/1
+                    [120/1] via 192.168.1.2, 00:00:25, Serial0/0
+Plovdiv(config-router)#exit
+Plovdiv(config)#exit
+Plovdiv#show r
+*Mar  1 00:30:39.095: %SYS-5-CONFIG_I: Configured from console by console
+Plovdiv#show run
+Building configuration...
+
+Current configuration : 1733 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Plovdiv
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+memory-size iomem 5
+ip subnet-zero
+no ip icmp rate-limit unreachable
+ip cef
+ip tcp synwait-time 5
+!
+!
+no ip dhcp use vrf connected
+ip dhcp excluded-address 192.168.10.1 192.168.10.5
+ip dhcp excluded-address 192.168.10.129 192.168.10.133
+!
+ip dhcp pool vlan10
+   network 192.168.10.0 255.255.255.128
+   dns-server 192.168.10.1
+   default-router 192.168.10.1
+   domain-name test.com
+   lease 3 12 59
+!
+ip dhcp pool vlan20
+   network 192.168.10.128 255.255.255.128
+   dns-server 192.168.10.129
+   default-router 192.168.10.129
+   domain-name test.com
+   lease 3 12 59
+!
+!
+no ip domain lookup
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.128
+ no snmp trap link-status
+!
+interface FastEthernet0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.10.129 255.255.255.128
+ no snmp trap link-status
+!
+interface Serial0/0
+ ip address 192.168.1.1 255.255.255.252
+ clock rate 2000000
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface Serial0/1
+ ip address 192.168.1.9 255.255.255.252
+ clock rate 2000000
+!
+router rip
+ version 2
+ network 192.168.1.0
+ network 192.168.10.0
+!
+ip classless
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+control-plane
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
+
+Sofia#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Sofia(config)#ip dhcp pool sofia
+Sofia(dhcp-config)#network 192.168.20.0 255.255.255.0
+Sofia(dhcp-config)#defa
+Sofia(dhcp-config)#default-router 192.168.20.1
+Sofia(dhcp-config)#dns
+Sofia(dhcp-config)#dns-server 192.168.20.1
+Sofia(dhcp-config)#do
+Sofia(dhcp-config)#domain-name test.com
+Sofia(dhcp-config)#lease 3 12 59
+Sofia(dhcp-config)#exit
+Sofia(config)#ip dhcp excl
+Sofia(config)#ip dhcp excluded-address 192.168.20.1 192.168.20.10
+Sofia(config)#int fa0/0
+Sofia(config-if)#ip add
+Sofia(config-if)#ip address 192.168.20.1 255.255.255.0
+Sofia(config-if)#no shut
+Sofia(config-if)#
+*Mar  1 00:14:47.483: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:14:48.483: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+Sofia(config-if)#exit
+Sofia(config)#int s0/0
+Sofia(config-if)#ip add
+Sofia(config-if)#ip address 192.168.1.2 255.255.255.252
+Sofia(config-if)#no shut
+Sofia(config-if)#int s0/1
+*Mar  1 00:15:50.163: %LINK-3-UPDOWN: Interface Serial0/0, changed state to up
+*Mar  1 00:15:51.163: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0, changed state to up
+Sofia(config-if)#int s0/1
+Sofia(config-if)#ip add
+Sofia(config-if)#ip address 192.168.1.5 255.255.255.252
+Sofia(config-if)#no shut
+Sofia(config-if)#exit
+Sofia(config)#
+*Mar  1 00:16:34.431: %LINK-3-UPDOWN: Interface Serial0/1, changed state to up
+*Mar  1 00:16:35.431: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1, changed state to up
+Sofia(config)#ip routing
+Sofia(config)#router rip
+Sofia(config-router)#ver 2
+Sofia(config-router)#network 192.168.20.0
+Sofia(config-router)#network 192.168.1.0
+Sofia(config-router)#network 192.168.1.4
+Sofia(config-router)#
+*Mar  1 00:17:02.555: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1, changed state to down
+Sofia(config-router)#do wr
+Building configuration...
+[OK]
+Sofia(config-router)#
+*Mar  1 00:19:52.555: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1, changed state to up
+Sofia(config-router)#exit
+Sofia(config)#exit
+Sofia#show r
+*Mar  1 00:30:54.411: %SYS-5-CONFIG_I: Configured from console by console
+Sofia#show run
+Building configuration...
+
+Current configuration : 1283 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Sofia
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+memory-size iomem 5
+ip subnet-zero
+no ip icmp rate-limit unreachable
+ip cef
+ip tcp synwait-time 5
+!
+!
+no ip dhcp use vrf connected
+ip dhcp excluded-address 192.168.20.1 192.168.20.10
+!
+ip dhcp pool sofia
+   network 192.168.20.0 255.255.255.0
+   default-router 192.168.20.1
+   dns-server 192.168.20.1
+   domain-name test.com
+   lease 3 12 59
+!
+!
+no ip domain lookup
+!
+!
+interface FastEthernet0/0
+ ip address 192.168.20.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface Serial0/0
+ ip address 192.168.1.2 255.255.255.252
+ clock rate 2000000
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface Serial0/1
+ ip address 192.168.1.5 255.255.255.252
+ clock rate 2000000
+!
+router rip
+ version 2
+ network 192.168.1.0
+ network 192.168.20.0
+!
+ip classless
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+control-plane
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
+
+Varna#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Varna(config)#int fa0/0
+Varna(config-if)#ip add
+Varna(config-if)#ip address 192.168.30.1 255.255.255.252
+Varna(config-if)#no shut
+Varna(config-if)#
+*Mar  1 00:18:56.331: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:18:57.331: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+Varna(config-if)#exit
+Varna(config)#int s0/0
+Varna(config-if)#ip add
+Varna(config-if)#ip address 192.168.1.10 255.255.255.252
+Varna(config-if)#no shut
+Varna(config-if)#
+*Mar  1 00:19:23.971: %LINK-3-UPDOWN: Interface Serial0/0, changed state to up
+*Mar  1 00:19:24.971: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0, changed state to up
+Varna(config-if)#exit
+Varna(config)#int s0/1
+Varna(config-if)#ip add
+Varna(config-if)#ip address 192.168.1.6 255.255.255.252
+Varna(config-if)#no shut
+Varna(config-if)#
+*Mar  1 00:19:51.339: %LINK-3-UPDOWN: Interface Serial0/1, changed state to up
+*Mar  1 00:19:52.339: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1, changed state to up
+Varna(config-if)#exit
+Varna(config)#ip routing
+Varna(config)#router rip
+Varna(config-router)#ver 2
+Varna(config-router)#network 192.168.30.0
+Varna(config-router)#network 192.168.1.4
+Varna(config-router)#network 192.168.1.8
+Varna(config-router)#do wr
+Building configuration...
+[OK]
+Varna(config-router)#exit
+Varna(config)#acc
+Varna(config)#access-list 1 per
+Varna(config)#access-list 1 permit 192.168.30.0 0.0.0.3
+Varna(config)#ip nat inside source li
+Varna(config)#ip nat inside source list 1 int
+Varna(config)#ip nat inside source list 1 interface s0/0 ove
+Varna(config)#ip nat inside source list 1 interface s0/0 overload
+Varna(config)#ip nat inside source list 1 interface s0/0 overload
+*Mar  1 00:25:53.739: %LINEPROTO-5-UPDOWN: Line protocol on Interface NVI0, changed state to up
+Varna(config)#ip nat inside source list 1 interface s0/1 overload
+Varna(config)#int
+Varna(config)#interface fa 0/0
+Varna(config-if)#ip nat ins
+Varna(config-if)#int s0/0
+Varna(config-if)#ip nat out
+Varna(config-if)#int s0/1
+Varna(config-if)#ip nat out
+Varna(config-if)#do wr
+Building configuration...
+[OK]
+Varna(config-if)#
+*Mar  1 00:42:11.975: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+Varna(config-if)#
+*Mar  1 00:47:40.975: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+Varna(config-if)#exit
+Varna(config)#exit
+Varna#show run
+*Mar  1 00:48:44.275: %SYS-5-CONFIG_I: Configured from console by console
+Varna#show run
+Building configuration...
+
+Current configuration : 1260 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Varna
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+memory-size iomem 5
+ip subnet-zero
+no ip icmp rate-limit unreachable
+ip cef
+ip tcp synwait-time 5
+!
+!
+no ip domain lookup
+!
+!
+interface FastEthernet0/0
+ ip address 192.168.30.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly
+ duplex auto
+ speed auto
+!
+interface Serial0/0
+ ip address 192.168.1.10 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly
+ clock rate 2000000
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface Serial0/1
+ ip address 192.168.1.6 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly
+ clock rate 2000000
+!
+router rip
+ version 2
+ network 192.168.1.0
+ network 192.168.30.0
+!
+ip classless
+!
+no ip http server
+no ip http secure-server
+ip nat inside source list 1 interface Serial0/1 overload
+!
+access-list 1 permit 192.168.30.0 0.0.0.3
+no cdp log mismatch duplex
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
+
+
+PC5> ip dhcp
+DDORA IP 192.168.20.11/24 GW 192.168.20.1
+
+PC5> ping 192.168.30.2
+84 bytes from 192.168.30.2 icmp_seq=1 ttl=62 time=60.629 ms
+84 bytes from 192.168.30.2 icmp_seq=2 ttl=62 time=75.212 ms
+84 bytes from 192.168.30.2 icmp_seq=3 ttl=62 time=60.615 ms
+84 bytes from 192.168.30.2 icmp_seq=4 ttl=62 time=60.342 ms
+84 bytes from 192.168.30.2 icmp_seq=5 ttl=62 time=60.957 ms
+
+PC5> ping 192.168.30.2
+192.168.30.2 icmp_seq=1 timeout
+192.168.30.2 icmp_seq=2 timeout
+192.168.30.2 icmp_seq=3 timeout
+192.168.30.2 icmp_seq=4 timeout
+192.168.30.2 icmp_seq=5 timeout
+
+PC5>
+
+Server> ip 192.168.30.2 255.255.255.252 192.168.30.1
+Checking for duplicate address...
+PC1 : 192.168.30.2 255.255.255.252 gateway 192.168.30.1
+
+Server> ping 192.168.10.6
+192.168.10.6 icmp_seq=1 timeout
+192.168.10.6 icmp_seq=2 timeout
+84 bytes from 192.168.10.6 icmp_seq=3 ttl=62 time=76.169 ms
+84 bytes from 192.168.10.6 icmp_seq=4 ttl=62 time=60.309 ms
+84 bytes from 192.168.10.6 icmp_seq=5 ttl=62 time=75.371 ms
+
+Server> ping 192.168.20.11
+192.168.20.11 icmp_seq=1 timeout
+192.168.20.11 icmp_seq=2 timeout
+84 bytes from 192.168.20.11 icmp_seq=3 ttl=62 time=76.044 ms
+84 bytes from 192.168.20.11 icmp_seq=4 ttl=62 time=60.974 ms
+84 bytes from 192.168.20.11 icmp_seq=5 ttl=62 time=76.582 ms
+
+Server> ping 192.168.20.11
+192.168.20.11 icmp_seq=1 timeout
+192.168.20.11 icmp_seq=2 timeout
+84 bytes from 192.168.20.11 icmp_seq=3 ttl=62 time=60.181 ms
+84 bytes from 192.168.20.11 icmp_seq=4 ttl=62 time=61.302 ms
+84 bytes from 192.168.20.11 icmp_seq=5 ttl=62 time=60.984 ms
+
+Server> ping 192.168.10.6
+192.168.10.6 icmp_seq=1 timeout
+192.168.10.6 icmp_seq=2 timeout
+84 bytes from 192.168.10.6 icmp_seq=3 ttl=61 time=105.762 ms
+84 bytes from 192.168.10.6 icmp_seq=4 ttl=61 time=76.155 ms
+84 bytes from 192.168.10.6 icmp_seq=5 ttl=61 time=104.938 ms
+
+
+PC2> ip dhcp
+DDORA IP 192.168.10.7/25 GW 192.168.10.1
+
+PC2> ping 192.168.30.2
+192.168.30.2 icmp_seq=1 timeout
+192.168.30.2 icmp_seq=2 timeout
+192.168.30.2 icmp_seq=3 timeout
+192.168.30.2 icmp_seq=4 timeout
+192.168.30.2 icmp_seq=5 timeout

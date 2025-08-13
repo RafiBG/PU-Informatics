@@ -1,0 +1,569 @@
+Connected to Dynamips VM "Plovdiv" (ID 1, type c3725) - Console port
+Press ENTER to get the prompt.
+ROMMON emulation microcode.
+
+                           Launching IOS image at 0x80008000...
+
+                                                               Smart Init is dis                            abled. IOMEM set to: 5
+
+                        Using iomem percentage: 5
+
+              Restricted Rights Legend
+
+Use, duplication, or disclosure by the Government is
+subject to restrictions as set forth in subparagraph
+(c) of the Commercial Computer Software - Restricted
+Rights clause at FAR sec. 52.227-19 and subparagraph
+(c) (1) (ii) of the Rights in Technical Data and Computer
+Software clause at DFARS sec. 252.227-7013.
+
+           cisco Systems, Inc.
+           170 West Tasman Drive
+           San Jose, California 95134-1706
+
+
+
+Cisco IOS Software, 3700 Software (C3725-ADVSECURITYK9-M), Version 12.4(3), RELE                            ASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2005 by Cisco Systems, Inc.
+Compiled Fri 22-Jul-05 02:27 by hqluong
+Image text-base: 0x6000905C, data-base: 0x61B4A000
+
+
+ BIST FAILED...Port Statistics for unclassified packets is not turned on.
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+Cisco 3725 (R7000) processor (revision 0.1) with 124928K/6144K bytes of memory.
+Processor board ID FTX0945W0MY
+R7000 CPU at 240MHz, Implementation 39, Rev 2.1, 256KB L2, 512KB L3 Cache
+2 FastEthernet interfaces
+2 Serial(sync/async) interfaces
+DRAM configuration is 64 bits wide with parity enabled.
+55K bytes of NVRAM.
+
+SETUP: new interface FastEthernet0/0 placed in "shutdown" state
+SETUP: new interface Serial0/0 placed in "shutdown" state
+SETUP: new interface FastEthernet0/1 placed in "shutdown" state
+SETUP: new interface Serial0/1 placed in "shutdown" state
+% Crashinfo may not be recovered at flash:crashinfo
+% This file system device reports an error
+
+
+Press RETURN to get started!
+
+sslinit fn
+
+*Mar  1 00:00:01.883: %SW_VLAN-4-IFS_FAILURE: VLAN manager encountered file oper                            ation error: call = ifs_open/read / code = 3588 (No device available)
+    / bytes transfered = 0
+*Mar  1 00:00:01.943: %SYS-5-CONFIG_I: Configured from memory by console
+*Mar  1 00:00:02.151: %SYS-5-RESTART: System restarted --
+Cisco IOS Software, 3700 Software (C3725-ADVSECURITYK9-M), Version 12.4(3), RELE                            ASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2005 by Cisco Systems, Inc.
+Compiled Fri 22-Jul-05 02:27 by hqluong
+*Mar  1 00:00:02.167: %SNMP-5-COLDSTART: SNMP agent on host Plovdiv is undergoin                            g a cold start
+*Mar  1 00:00:02.995: %LINK-5-CHANGED: Interface FastEthernet0/0, changed state                             to administratively down
+*Mar  1 00:00:03.043: %LINK-5-CHANGED: Interface FastEthernet0/1, changed state                             to administratively down
+*Mar  1 00:00:03.087: %LINK-5-CHANGED: Interface Serial0/0, changed state to adm                            inistratively down
+*Mar  1 00:00:03.087: %LINK-5-CHANGED: Interface Serial0/1, changed state to adm                            inistratively down
+*Mar  1 00:00:03.995: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthern                            et0/0, changed state to down
+*Mar  1 00:00:04.043: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthern                            et0/1, changed state to down
+*Mar  1 00:00:04.087: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0,                             changed state to down
+*Mar  1 00:00:04.087: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1,                             changed state to down
+Plovdiv#conft
+Translating "conft"
+
+Translating "conft"
+% Unknown command or computer name, or unable to find computer address
+Plovdiv#configure
+Configuring from terminal, memory, or network [terminal]? y
+?Must be "terminal", "replace", "memory" or "network"
+Plovdiv#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Plovdiv(config)#int f0/0
+Plovdiv(config-if)#ip address 192.168.77.128
+% Incomplete command.
+
+Plovdiv(config-if)#no ip address 192.168.77.128
+% Incomplete command.
+
+Plovdiv(config-if)#ip address 192.168.77.128 255.255.255.128
+Bad mask /25 for address 192.168.77.128
+Plovdiv(config-if)#ip address 192.168.77.1 255.255.255.128
+Plovdiv(config-if)#no shut
+Plovdiv(config-if)#exit
+Plovdiv(config)#do
+*Mar  1 00:02:39.831: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:02:40.831: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+Plovdiv(config)#do wr
+Building configuration...
+[OK]
+Plovdiv(config)#exit
+Plovdiv#
+*Mar  1 00:02:54.575: %SYS-5-CONFIG_I: Configured from console by console
+Plovdiv#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Plovdiv(config)#ip dhcp pool 10
+Plovdiv(dhcp-config)#network 192.168.77.0 255.255.255.128
+Plovdiv(dhcp-config)#dns-server 192.168.77.1
+Plovdiv(dhcp-config)#def
+Plovdiv(dhcp-config)#default-router 192.168.77.1
+Plovdiv(dhcp-config)#dom
+Plovdiv(dhcp-config)#domain-name test.com
+Plovdiv(dhcp-config)#le
+Plovdiv(dhcp-config)#lease 3 12 59
+Plovdiv(dhcp-config)#exit
+Plovdiv(config)#do
+Plovdiv(config)#do wr
+Plovdiv(config)#do wr
+Building configuration...
+[OK]
+Plovdiv(config)#ip dhcp excp
+                           ^
+% Invalid input detected at '^' marker.
+
+Plovdiv(config)#ip dhcp excl
+% Incomplete command.
+
+Plovdiv(config)#ip dhcp excl
+Plovdiv(config)#ip dhcp exc
+Plovdiv(config)#ip dhcp excluded-address 192.168.77.1 192.168.77.10
+Plovdiv(config)#no shut
+% Incomplete command.
+
+Plovdiv(config)#int s0/0
+Plovdiv(config-if)#ip
+Plovdiv(config-if)#ip address 192.168.1.1
+% Incomplete command.
+
+Plovdiv(config-if)#ip address 192.168.1.1 255.255.255.252
+Plovdiv(config-if)#no shut
+Plovdiv(config-if)#
+*Mar  1 00:07:23.691: %LINK-3-UPDOWN: Interface Serial0/0, changed state to up
+*Mar  1 00:07:24.691: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0, changed state to up
+Plovdiv(config-if)#exit
+Plovdiv(config)#do wr
+Building configuration...
+[OK]
+Plovdiv(config)#exit
+Plovdiv#
+*Mar  1 00:07:43.783: %SYS-5-CONFIG_I: Configured from console by console
+Plovdiv#
+*Mar  1 00:07:52.071: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0, changed state to down
+Plovdiv#conft
+Plovdiv#conft
+Translating "conft"
+
+Translating "conft"
+% Unknown command or computer name, or unable to find computer address
+Plovdiv#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Plovdiv(config)#ip routing
+Plovdiv(config)#ip routing
+Plovdiv(config)#router rip
+Plovdiv(config-router)#version 2
+Plovdiv(config-router)#network
+Plovdiv(config-router)#network 192.168.77.0
+Plovdiv(config-router)#network 192.168.1.0
+Plovdiv(config-router)#do wr
+Building configuration...
+[OK]
+Plovdiv(config-router)#exit
+Plovdiv(config)#exit
+Plovdiv#sh
+*Mar  1 00:16:31.651: %SYS-5-CONFIG_I: Configured from console by console
+Plovdiv#show run
+Building configuration...
+
+Current configuration : 1271 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Plovdiv
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+memory-size iomem 5
+ip subnet-zero
+no ip icmp rate-limit unreachable
+ip cef
+ip tcp synwait-time 5
+!
+!
+no ip dhcp use vrf connected
+ip dhcp excluded-address 192.168.77.1 192.168.77.10
+!
+ip dhcp pool 10
+   network 192.168.77.0 255.255.255.128
+   dns-server 192.168.77.1
+   default-router 192.168.77.1
+   domain-name test.com
+   lease 3 12 59
+!
+!
+no ip domain lookup
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.168.77.1 255.255.255.128
+ duplex auto
+ speed auto
+!
+interface Serial0/0
+ ip address 192.168.1.1 255.255.255.252
+ clock rate 2000000
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface Serial0/1
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+router rip
+ version 2
+ network 192.168.1.0
+ network 192.168.77.0
+!
+ip classless
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
+
+Plovdiv#
+Plovdiv#
+Plovdiv#
+Plovdiv#
+Plovdiv#
+
+
+Connected to Dynamips VM "Sofia" (ID 2, type c3725) - Console port
+Press ENTER to get the prompt.
+ROMMON emulation microcode.
+
+                           Launching IOS image at 0x80008000...
+
+                                                               Smart Init is dis                            abled. IOMEM set to: 5
+
+                        Using iomem percentage: 5
+
+              Restricted Rights Legend
+
+Use, duplication, or disclosure by the Government is
+subject to restrictions as set forth in subparagraph
+(c) of the Commercial Computer Software - Restricted
+Rights clause at FAR sec. 52.227-19 and subparagraph
+(c) (1) (ii) of the Rights in Technical Data and Computer
+Software clause at DFARS sec. 252.227-7013.
+
+           cisco Systems, Inc.
+           170 West Tasman Drive
+           San Jose, California 95134-1706
+
+
+
+Cisco IOS Software, 3700 Software (C3725-ADVSECURITYK9-M), Version 12.4(3), RELE                            ASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2005 by Cisco Systems, Inc.
+Compiled Fri 22-Jul-05 02:27 by hqluong
+Image text-base: 0x6000905C, data-base: 0x61B4A000
+
+
+ BIST FAILED...Port Statistics for unclassified packets is not turned on.
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+Cisco 3725 (R7000) processor (revision 0.1) with 124928K/6144K bytes of memory.
+Processor board ID FTX0945W0MY
+R7000 CPU at 240MHz, Implementation 39, Rev 2.1, 256KB L2, 512KB L3 Cache
+2 FastEthernet interfaces
+2 Serial(sync/async) interfaces
+DRAM configuration is 64 bits wide with parity enabled.
+55K bytes of NVRAM.
+
+SETUP: new interface FastEthernet0/0 placed in "shutdown" state
+SETUP: new interface Serial0/0 placed in "shutdown" state
+SETUP: new interface FastEthernet0/1 placed in "shutdown" state
+SETUP: new interface Serial0/1 placed in "shutdown" state
+% Crashinfo may not be recovered at flash:crashinfo
+% This file system device reports an error
+
+
+Press RETURN to get started!
+
+sslinit fn
+
+*Mar  1 00:00:01.851: %SW_VLAN-4-IFS_FAILURE: VLAN manager encountered file oper                            ation error: call = ifs_open/read / code = 3588 (No device available)
+    / bytes transfered = 0
+*Mar  1 00:00:01.911: %SYS-5-CONFIG_I: Configured from memory by console
+*Mar  1 00:00:02.127: %SYS-5-RESTART: System restarted --
+Cisco IOS Software, 3700 Software (C3725-ADVSECURITYK9-M), Version 12.4(3), RELE                            ASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2005 by Cisco Systems, Inc.
+Compiled Fri 22-Jul-05 02:27 by hqluong
+*Mar  1 00:00:02.139: %SNMP-5-COLDSTART: SNMP agent on host Sofia is undergoing                             a cold start
+*Mar  1 00:00:02.963: %LINK-5-CHANGED: Interface FastEthernet0/0, changed state                             to administratively down
+*Mar  1 00:00:03.027: %LINK-5-CHANGED: Interface FastEthernet0/1, changed state                             to administratively down
+*Mar  1 00:00:03.071: %LINK-5-CHANGED: Interface Serial0/0, changed state to adm                            inistratively down
+*Mar  1 00:00:03.071: %LINK-5-CHANGED: Interface Serial0/1, changed state to adm                            inistratively down
+*Mar  1 00:00:03.963: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthern                            et0/0, changed state to down
+*Mar  1 00:00:04.027: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthern                            et0/1, changed state to down
+*Mar  1 00:00:04.071: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0,                             changed state to down
+*Mar  1 00:00:04.071: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1,                             changed state to down
+Sofia#conft
+Sofia#conft
+Translating "conft"
+
+Translating "conft"
+% Unknown command or computer name, or unable to find computer address
+Sofia#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Sofia(config)#int fa0/0
+Sofia(config-if)#ip address 192.168.154.1 255.255.255.192
+Sofia(config-if)#no shut
+Sofia(config-if)#exit
+Sofia(config)#
+*Mar  1 00:08:59.623: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:09:00.623: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+Sofia(config)#do wr
+Building configuration...
+[OK]
+Sofia(config)#ip dchp pool 20
+                  ^
+% Invalid input detected at '^' marker.
+
+Sofia(config)#ip dchp pool 20
+                  ^
+% Invalid input detected at '^' marker.
+
+Sofia(config)#ip dhcp pool 20
+Sofia(dhcp-config)#net
+Sofia(dhcp-config)#netw
+Sofia(dhcp-config)#network 192.168.154.1
+Sofia(dhcp-config)#network 192.168.154.1 255.255.255.192
+Sofia(dhcp-config)#dn
+Sofia(dhcp-config)#dns-server 192.168.154.1
+Sofia(dhcp-config)#de
+Sofia(dhcp-config)#default-router 192.168.154.1
+Sofia(dhcp-config)#doma
+Sofia(dhcp-config)#domain-name test.com
+Sofia(dhcp-config)#le
+Sofia(dhcp-config)#lease 3 12 59
+Sofia(dhcp-config)#exit
+Sofia(config)#do wr
+Building configuration...
+[OK]
+Sofia(config)#ip dchp e
+Sofia(config)#ip dchp excl
+Sofia(config)#ip dhcp excl
+Sofia(config)#ip dhcp excluded-address 192.168.154.1 192.168.154.5
+Sofia(config)#no shut
+% Incomplete command.
+
+Sofia(config)#do wr
+Building configuration...
+[OK]
+Sofia(config)#int s0/0
+Sofia(config-if)#ip address 192.168.1.2
+% Incomplete command.
+
+Sofia(config-if)#ip
+Sofia(config-if)#ip adress 192.168.1.2 255.255.255.252
+                      ^
+% Invalid input detected at '^' marker.
+
+Sofia(config-if)#ip address 192.168.1.2 255.255.255.252
+Sofia(config-if)#exit
+Sofia(config)#do wr
+Building configuration...
+[OK]
+Sofia(config)#ip routing
+Sofia(config)#ip routing
+Sofia(config)#router
+Sofia(config)#router rip
+Sofia(config-router)#version 2
+Sofia(config-router)#net
+Sofia(config-router)#network 192.168.154.0
+Sofia(config-router)#network 192.168.1.0
+Sofia(config-router)#do wr
+Building configuration...
+[OK]
+Sofia(config-router)#exit
+Sofia(config)#exit
+Sofia#
+*Mar  1 00:20:04.179: %SYS-5-CONFIG_I: Configured from console by console
+Sofia#show run
+Building configuration...
+
+Current configuration : 1285 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Sofia
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+memory-size iomem 5
+ip subnet-zero
+no ip icmp rate-limit unreachable
+ip cef
+ip tcp synwait-time 5
+ --More--
+
+
+
+
+Welcome to Virtual PC Simulator, version 0.6.2
+Dedicated to Daling.
+Build time: Apr 10 2019 02:42:20
+Copyright (c) 2007-2014, Paul Meng (mirnshi@gmail.com)
+All rights reserved.
+
+VPCS is free software, distributed under the terms of the "BSD" licence.
+Source code and license can be found at vpcs.sf.net.
+For more information, please visit wiki.freecode.com.cn.
+
+Press '?' to get help.
+
+Executing the startup file
+
+
+PC1> ip dhcp
+DDORA IP 192.168.77.11/25 GW 192.168.77.1
+
+PC1> ping 192.168.77.12
+84 bytes from 192.168.77.12 icmp_seq=1 ttl=64 time=0.587 ms
+84 bytes from 192.168.77.12 icmp_seq=2 ttl=64 time=0.723 ms
+84 bytes from 192.168.77.12 icmp_seq=3 ttl=64 time=0.651 ms
+84 bytes from 192.168.77.12 icmp_seq=4 ttl=64 time=1.063 ms
+84 bytes from 192.168.77.12 icmp_seq=5 ttl=64 time=0.923 ms
+
+PC1> ping 192.168.154.6
+*192.168.77.1 icmp_seq=1 ttl=255 time=30.258 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.77.1 icmp_seq=2 ttl=255 time=30.332 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.77.1 icmp_seq=3 ttl=255 time=30.506 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.77.1 icmp_seq=4 ttl=255 time=30.429 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.77.1 icmp_seq=5 ttl=255 time=30.306 ms (ICMP type:3, code:1, Destination host unreachable)
+
+PC1> ping 192.168.154.6
+*192.168.77.1 icmp_seq=1 ttl=255 time=30.416 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.77.1 icmp_seq=2 ttl=255 time=30.593 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.77.1 icmp_seq=3 ttl=255 time=15.282 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.77.1 icmp_seq=4 ttl=255 time=15.394 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.77.1 icmp_seq=5 ttl=255 time=30.431 ms (ICMP type:3, code:1, Destination host unreachable)
+
+PC1> ping 192.168.154.7
+*192.168.77.1 icmp_seq=1 ttl=255 time=30.379 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.77.1 icmp_seq=2 ttl=255 time=30.505 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.77.1 icmp_seq=3 ttl=255 time=30.466 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.77.1 icmp_seq=4 ttl=255 time=30.467 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.77.1 icmp_seq=5 ttl=255 time=15.524 ms (ICMP type:3, code:1, Destination host unreachable)
+
+PC1>
+
+
+
+
+Welcome to Virtual PC Simulator, version 0.6.2
+Dedicated to Daling.
+Build time: Apr 10 2019 02:42:20
+Copyright (c) 2007-2014, Paul Meng (mirnshi@gmail.com)
+All rights reserved.
+
+VPCS is free software, distributed under the terms of the "BSD" licence.
+Source code and license can be found at vpcs.sf.net.
+For more information, please visit wiki.freecode.com.cn.
+
+Press '?' to get help.
+
+Executing the startup file
+
+
+PC3> ip dhcp
+DDORA IP 192.168.154.6/26 GW 192.168.154.1
+
+PC3> ping 192.168.154.7
+84 bytes from 192.168.154.7 icmp_seq=1 ttl=64 time=0.928 ms
+84 bytes from 192.168.154.7 icmp_seq=2 ttl=64 time=0.908 ms
+84 bytes from 192.168.154.7 icmp_seq=3 ttl=64 time=0.946 ms
+84 bytes from 192.168.154.7 icmp_seq=4 ttl=64 time=0.941 ms
+84 bytes from 192.168.154.7 icmp_seq=5 ttl=64 time=0.870 ms
+
+PC3>

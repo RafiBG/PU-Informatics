@@ -1,0 +1,21 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Валидна до: @ViewData["valid_until"]</h1>
+
+<form action="/api/index">
+
+    <p>Car number:</p>
+    <input type="text" name="carNumber" />
+
+    <br />
+    <button type="submit">login</button>
+
+    <br /><br />
+
+    <h1>@ViewData["data"]</h1>
+
+</form>

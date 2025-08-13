@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Nasa";
+}
+
+<h2>Nasa</h2>
+
+<p>@ViewData["title"] @ViewData["copyright"] @ViewData["date"] </p>
+<img width="1200px" src="@ViewData["image"]" />
+
+<p>@ViewData["explanation"]</p>
+
+<br />
+<p>Body: @ViewBag.result</p>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Покажи дата</title>
+</head>
+<body>
+	<h1>Показване дата</h1>
+	<p id="showDate"></p>
+	<style>#showDate { font-size: 25px; }</style>
+	<script>
+	  function checkIfOneDigit(number) {
+		return number < 10 ? "0" + number : number;
+	  }
+  
+	  var date = new Date();
+	  var currentDate = checkIfOneDigit(date.getDate()) + "." + checkIfOneDigit(date.getMonth() + 1) + "." + date.getFullYear();
+	  var currentTime = checkIfOneDigit(date.getHours()) + ":" + checkIfOneDigit(date.getMinutes());
+	  var dateTime = currentDate + " " + currentTime;
+	  document.getElementById("showDate").innerHTML = dateTime;
+	</script>
+  </body>
+</html>

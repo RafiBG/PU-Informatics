@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html lang="bg">
+<head>
+  <title>Задача 3 и 4</title>
+  <style>
+    * {
+      background-color: #ccc7c7;
+    }
+
+    ul {
+      position: relative;
+      top: -11px;
+      width: 100%;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 26px;
+      text-decoration: none;
+      background-color: #333;
+    }
+
+    li a:hover {
+      background-color: rgb(42, 89, 183);
+    }
+
+    .shapes-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .triangle {
+      width: 0;
+      height: 0;
+      border-left: 30px solid transparent;
+      border-right: 30px solid transparent;
+      border-bottom: 52.2px solid #3498db;
+      margin: 10px;
+      display: inline-block;
+    }
+
+    .square {
+      width: 50px;
+      height: 50px;
+      margin: 10px;
+      background-color: red;
+      display: inline-block;
+    }
+    .circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: inline-block;
+      background-color: yellow;
+      margin: 10px;
+    }
+  </style>
+  <script>
+  </script>
+</head>
+<body>
+  <ul>
+    <li><a href="Task1,2.html">Задача 1,2</a></li>
+    <li><a href="Task3,4.html">Задача 3,4</a></li>
+    <li><a href="Task5,6.html">Задача 5,6</a></li>
+  </ul>
+
+  <div class="shapes-container">
+    <div class="triangle"></div>
+    <div class="square"></div>
+    <div class="circle"></div>
+  </div>
+
+  <p style="text-align: center; margin-top: 10px;">
+    Колко триъгълници виждате?
+    <br>
+    Отговор: <input type="text" id="triangleCount" placeholder="Напишете отговора тук">
+  </p>
+</body>
+</html>

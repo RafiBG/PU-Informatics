@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Информация за студент</title>
+</head>
+<body>
+    <h1>Информация за студент</h1>
+
+    <link rel="stylesheet" type="text/css" href="MainStyle.css">
+
+    <form id="student">
+        <label for="facultyNumber">Факултетен номер:</label>
+        <input type="text" id="facultyNumber" required><br><br>
+
+        <label for="firstName">Име:</label>
+        <input type="text" id="firstName" required><br><br>
+
+        <label for="lastName">Фамилно име:</label>
+        <input type="text" id="lastName" required><br><br>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" required><br><br>
+
+        <label for="phoneNumber">Телефонен номер:</label>
+        <input type="tel" id="phoneNumber" required><br><br>
+
+        <input type="submit" value="Запиши">
+    </form>
+
+    <h2>Сортирани по Име:</h2>
+    <ul id="sortName"></ul>
+    <h2>Сортирани по Факултетен номер:</h2>
+    <ul id="sortNumber"></ul>
+
+    <script src="MyScript.js"></script>
+</body>
+</html>

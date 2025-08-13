@@ -1,0 +1,89 @@
+*{
+    background-image:url(chessImages/Chess_Board.png);
+    background-repeat: no-repeat;
+}
+
+.draggable {
+    position: absolute;
+    cursor: grab;
+    z-index: 1;
+    width: 0px;
+    height: 0px;
+    display: block;
+    background-color: white;
+    border-radius: 100px;
+}
+
+.draggable img {border-radius: 6px;}
+
+#bPawn1 {
+    position: relative;
+    left: 65px;
+    top: 160px;
+}
+
+#bPawn2 {
+    position: relative;
+    left: 175px;
+    top: 160px;
+}
+
+#bPawn3 {
+    position: relative;
+    left: 285px;
+    top: 160px;
+}
+
+#bPawn4 {
+    position: relative;
+    left: 395px;
+    top: 160px;
+}
+
+#bPawn5 {
+    position: relative;
+    left: 500px;
+    top: 160px;
+}
+
+#bPawn6 {
+    position: relative;
+    left: 610px;
+    top: 160px;
+}
+
+#bPawn7 {
+    position: relative;
+    left: 720px;
+    top: 160px;
+}
+
+#bPawn8 {
+    position: relative;
+    left: 830px;
+    top: 160px;
+}
+
+#bRook1 {
+    position: relative;
+    left: 65px;
+    top: 50px;
+}
+
+#bRook2 {
+    position: relative;
+    left: 830px;
+    top: 50px;
+}
+
+#bKnight1 {
+    position: relative;
+    left: 175px;
+    top: 50px;
+}
+
+#bKnight2 {
+    position: relative;
+    left: 720px;
+    top: 50px;
+}

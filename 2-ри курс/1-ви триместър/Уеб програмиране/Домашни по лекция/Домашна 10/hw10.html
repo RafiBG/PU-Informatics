@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<head>
+    <title>Kid's Clock</title>
+    <style>
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="300" height="300" id="canvas">Clock</canvas>
+    <script>
+        const COLORS = [
+            "#63007c",
+            "#0a5e0a",
+            "#91ea4d",
+            "#59597f",
+            "#358c50",
+            "#206187",
+            "#49293f",
+            "#9b9b93",
+            "#7a747a",
+            "#ed316d",
+            "#3600f9",
+            "#012d9e"
+        ];
+        const animalEmojis = [
+            "🐘", "🐒", "🐆", "🦓", "🐅", "🐊",
+            "🦒", "🐪", "🐎", "🦏", "🦌", "🐖"
+        ];
+
+        function drawClock(canvas) {
+            const ctx = canvas.getContext("2d");
+            if (!ctx) {
+                alert("Your web browser does not support canvas.");
+                return;
+            }
+            let minutes = 0;
+            let faceColor = COLORS[11];
+            setInterval(() => {
+                let color = minutes == 0 ? COLORS[0] : COLORS[Math.floor(minutes / 60)];
+                drawClockFace(ctx, faceColor);
+                drawHourShadow(ctx, color, minutes % 60);
+                drawNumbers(ctx, minutes);
+                drawBigHand(ctx, minutes % 60);
+                minutes == 0 ? drawSmallHand(ctx, 0) : drawSmallHand(ctx, minutes / 60);
+                minutes++;
+                if (minutes % 60 == 0) {
+                    faceColor = color;
+                }
+                if (minutes > 12 * 60) {
+                    minutes = 0;
+                }
+            }, 50);
+        }
+
+        function drawClockFace(ctx, color) {
+            ctx.beginPath();
+            ctx.arc(150, 150, 140, 0, Math.PI * 2, false);
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        function drawNumbers(ctx, minutes) {
+            ctx.beginPath();
+            ctx.fillStyle = "black";
+            ctx.textAlign = "center";
+            ctx.baseLine = "middle";
+            const radius = 120;
+            ctx.font = radius * 0.15 + "px serif";
+            for (let num = 1; num < 13; num++) {
+                drawNumberOrImage(ctx, num, minutes, radius);
+            }
+            ctx.closePath();
+        }
+
+        function drawNumberOrImage(ctx, num, minutes, radius) {
+            const angle = num * Math.PI / 6;
+            ctx.rotate(angle);
+            ctx.translate(0, -radius);
+            ctx.rotate(-angle);
+
+            if (isSmallHandCloseToNumber(angle, minutes)) {
+                ctx.fillText(animalEmojis[num - 1], 150, 155);
+            } else {
+                ctx.fillText(num.toString(), 150, 155);
+            }
+
+            ctx.rotate(angle);
+            ctx.translate(0, radius);
+            ctx.rotate(-angle);
+        }
+
+        function isSmallHandCloseToNumber(angle, minutes) {
+            const smallHandAngle = (Math.PI / 6) * minutes / 60;
+            return Math.abs(angle - smallHandAngle) < 0.1;
+        }
+
+        function drawSmallHand(ctx, hour) {
+            const handLen = 80;
+            ctx.beginPath();
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 10;
+            ctx.lineCap = "round";
+            ctx.moveTo(150, 150);
+            let x = Math.sin(hour * (Math.PI / 6));
+            let y = Math.cos(hour * (Math.PI / 6));
+            ctx.lineTo(150 + x * handLen, 150 + (y * handLen * -1));
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        function drawBigHand(ctx, minutes) {
+            const handLen = 100;
+            ctx.beginPath();
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 8;
+            ctx.lineCap = "round";
+            ctx.moveTo(150, 150);
+            let x = Math.sin(minutes * (Math.PI / 30));
+            let y = Math.cos(minutes * (Math.PI / 30));
+            ctx.lineTo(150 + x * handLen, 150 + (y * handLen * -1));
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        function drawHourShadow(ctx, color, minutes) {
+            ctx.beginPath();
+            ctx.fillStyle = color;
+            ctx.strokeStyle = color;
+            ctx.moveTo(150, 150);
+            ctx.arc(150, 150, 140, -Math.PI / 2, minutes * Math.PI / 30 - Math.PI / 2, false);
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        window.onload = () => {
+            console.log("So, it starts...");
+            let canvas = document.getElementById("canvas");
+            drawClock(canvas);
+        }
+    </script>
+</body>
+</html>

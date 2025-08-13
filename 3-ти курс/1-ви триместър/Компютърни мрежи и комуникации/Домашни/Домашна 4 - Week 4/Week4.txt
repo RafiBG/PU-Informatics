@@ -1,0 +1,387 @@
+ESW1#
+ESW1#
+ESW1#show vlan-sw
+ESW1#show vlan-switch br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/3, Fa1/4, Fa1/5, Fa1/6
+                                                Fa1/7, Fa1/8, Fa1/9, Fa1/10
+                                                Fa1/11, Fa1/12, Fa1/13, Fa1/14
+100  server                           active    Fa1/0
+110  administration                   active    Fa1/1
+120  production                       active    Fa1/2
+1002 fddi-default                     active
+1003 token-ring-default               active
+1004 fddinet-default                  active
+1005 trnet-default                    active
+ESW1#show run
+Building configuration...
+
+Current configuration : 2574 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+no service dhcp
+!
+hostname ESW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+memory-size iomem 5
+ip subnet-zero
+no ip routing
+no ip icmp rate-limit unreachable
+no ip cef
+ip tcp synwait-time 5
+!
+!
+no ip domain lookup
+!
+!
+vtp file nvram:vlan.dat
+
+!
+!
+interface FastEthernet0/0
+ description *** Unused for Layer2 EtherSwitch ***
+ no ip address
+ no ip route-cache
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ description *** Unused for Layer2 EtherSwitch ***
+ no ip address
+ no ip route-cache
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/0
+ switchport access vlan 100
+ duplex full
+ speed 100
+!
+interface FastEthernet1/1
+ switchport access vlan 110
+ duplex full
+ speed 100
+!
+interface FastEthernet1/2
+ switchport access vlan 120
+ duplex full
+ speed 100
+!
+interface FastEthernet1/3
+ duplex full
+ speed 100
+!
+interface FastEthernet1/4
+ duplex full
+ speed 100
+!
+interface FastEthernet1/5
+ duplex full
+ speed 100
+!
+interface FastEthernet1/6
+ duplex full
+ speed 100
+!
+interface FastEthernet1/7
+ duplex full
+ speed 100
+!
+interface FastEthernet1/8
+ duplex full
+ speed 100
+!
+interface FastEthernet1/9
+ duplex full
+ speed 100
+!
+interface FastEthernet1/10
+ duplex full
+ speed 100
+!
+interface FastEthernet1/11
+ duplex full
+ speed 100
+!
+interface FastEthernet1/12
+ duplex full
+ speed 100
+!
+interface FastEthernet1/13
+ duplex full
+ speed 100
+!
+interface FastEthernet1/14
+ duplex full
+ speed 100
+!
+interface FastEthernet1/15
+ switchport mode trunk
+ duplex full
+ speed 100
+!
+interface Vlan1
+ no ip address
+ no ip route-cache
+ shutdown
+!
+ip classless
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+control-plane
+!
+!
+banner exec ^C
+
+***************************************************************
+This is a normal Router with a SW module inside (NM-16ESW)
+It has been preconfigured with hard coded speed and duplex
+
+To create vlans use the command "vlan database" from exec mode
+After creating all desired vlans use "exit" to apply the config
+
+To view existing vlans use the command "show vlan-switch brief"
+
+Warning: You are using an old IOS image for this router.
+Please update the IOS to enable the "macro" command!
+***************************************************************
+
+^C
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
+
+ESW1#show ip int br
+Interface                  IP-Address      OK? Method Status                Protocol
+FastEthernet0/0            unassigned      YES NVRAM  administratively down down
+FastEthernet0/1            unassigned      YES NVRAM  administratively down down
+FastEthernet1/0            unassigned      YES unset  up                    up
+FastEthernet1/1            unassigned      YES unset  up                    up
+FastEthernet1/2            unassigned      YES unset  up                    up
+FastEthernet1/3            unassigned      YES unset  up                    down
+FastEthernet1/4            unassigned      YES unset  up                    down
+FastEthernet1/5            unassigned      YES unset  up                    down
+FastEthernet1/6            unassigned      YES unset  up                    down
+FastEthernet1/7            unassigned      YES unset  up                    down
+FastEthernet1/8            unassigned      YES unset  up                    down
+FastEthernet1/9            unassigned      YES unset  up                    down
+FastEthernet1/10           unassigned      YES unset  up                    down
+FastEthernet1/11           unassigned      YES unset  up                    down
+FastEthernet1/12           unassigned      YES unset  up                    down
+FastEthernet1/13           unassigned      YES unset  up                    down
+FastEthernet1/14           unassigned      YES unset  up                    down
+FastEthernet1/15           unassigned      YES unset  up                    up
+Vlan1                      unassigned      YES NVRAM  administratively down down
+ESW1#
+
+R1#show ip int br
+Interface                  IP-Address      OK? Method Status                Protocol
+FastEthernet0/0            unassigned      YES NVRAM  up                    up
+FastEthernet0/0.100        192.168.100.1   YES NVRAM  up                    up
+FastEthernet0/0.110        192.168.110.1   YES NVRAM  up                    up
+FastEthernet0/0.120        192.168.120.1   YES NVRAM  up                    up
+Serial0/0                  unassigned      YES NVRAM  administratively down down
+FastEthernet0/1            unassigned      YES NVRAM  administratively down down
+Serial0/1                  unassigned      YES NVRAM  administratively down down
+R1#show run
+R1#show running-config
+Building configuration...
+
+Current configuration : 1720 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+memory-size iomem 5
+ip subnet-zero
+no ip icmp rate-limit unreachable
+ip cef
+ip tcp synwait-time 5
+!
+!
+no ip dhcp use vrf connected
+ip dhcp excluded-address 192.168.110.1 192.168.110.10
+ip dhcp excluded-address 192.168.120.1 192.168.120.10
+!
+ip dhcp pool p110
+   network 192.168.110.0 255.255.255.0
+   default-router 192.168.110.1
+   dns-server 192.168.110.1
+   domain-name test110.com
+!
+ip dhcp pool p120
+   network 192.168.120.0 255.255.255.0
+   default-router 192.168.120.1
+   dns-server 192.168.120.1
+   domain-name test120.com
+!
+!
+no ip domain lookup
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/0.100
+ encapsulation dot1Q 100
+ ip address 192.168.100.1 255.255.255.0
+ no snmp trap link-status
+!
+interface FastEthernet0/0.110
+ encapsulation dot1Q 110
+ ip address 192.168.110.1 255.255.255.0
+ no snmp trap link-status
+!
+interface FastEthernet0/0.120
+ encapsulation dot1Q 120
+ ip address 192.168.120.1 255.255.255.0
+ no snmp trap link-status
+!
+interface Serial0/0
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface Serial0/1
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+ip classless
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
+
+
+
+PC1> show ip
+
+NAME        : PC1[1]
+IP/MASK     : 192.168.100.11/24
+GATEWAY     : 192.168.100.1
+DNS         :
+MAC         : 00:50:79:66:68:00
+LPORT       : 10018
+RHOST:PORT  : 127.0.0.1:10019
+MTU:        : 1500
+
+PC1> ping 192.168.110.11
+192.168.110.11 icmp_seq=1 timeout
+192.168.110.11 icmp_seq=2 timeout
+84 bytes from 192.168.110.11 icmp_seq=3 ttl=63 time=60.486 ms
+84 bytes from 192.168.110.11 icmp_seq=4 ttl=63 time=45.688 ms
+84 bytes from 192.168.110.11 icmp_seq=5 ttl=63 time=45.997 ms
+
+PC1> ping 192.168.120.11
+192.168.120.11 icmp_seq=1 timeout
+192.168.120.11 icmp_seq=2 timeout
+84 bytes from 192.168.120.11 icmp_seq=3 ttl=63 time=45.716 ms
+84 bytes from 192.168.120.11 icmp_seq=4 ttl=63 time=60.602 ms
+84 bytes from 192.168.120.11 icmp_seq=5 ttl=63 time=45.662 ms
+
+PC2> ip dhcp
+DDORA IP 192.168.110.11/24 GW 192.168.110.1
+
+PC2> ping 192.168.100.11
+84 bytes from 192.168.100.11 icmp_seq=1 ttl=63 time=60.750 ms
+84 bytes from 192.168.100.11 icmp_seq=2 ttl=63 time=60.750 ms
+84 bytes from 192.168.100.11 icmp_seq=3 ttl=63 time=60.704 ms
+84 bytes from 192.168.100.11 icmp_seq=4 ttl=63 time=45.677 ms
+84 bytes from 192.168.100.11 icmp_seq=5 ttl=63 time=60.470 ms
+
+PC2> ping 192.168.120.11
+84 bytes from 192.168.120.11 icmp_seq=1 ttl=63 time=60.265 ms
+84 bytes from 192.168.120.11 icmp_seq=2 ttl=63 time=60.578 ms
+84 bytes from 192.168.120.11 icmp_seq=3 ttl=63 time=60.734 ms
+84 bytes from 192.168.120.11 icmp_seq=4 ttl=63 time=61.917 ms
+84 bytes from 192.168.120.11 icmp_seq=5 ttl=63 time=45.906 ms
+
+PC3> ip dhcp
+DDORA IP 192.168.120.11/24 GW 192.168.120.1
+
+PC3> ping 192.168.100.11
+84 bytes from 192.168.100.11 icmp_seq=1 ttl=63 time=45.935 ms
+84 bytes from 192.168.100.11 icmp_seq=2 ttl=63 time=60.804 ms
+84 bytes from 192.168.100.11 icmp_seq=3 ttl=63 time=45.845 ms
+84 bytes from 192.168.100.11 icmp_seq=4 ttl=63 time=45.709 ms
+84 bytes from 192.168.100.11 icmp_seq=5 ttl=63 time=46.592 ms
+
+PC3> ping 192.168.110.11
+84 bytes from 192.168.110.11 icmp_seq=1 ttl=63 time=60.817 ms
+84 bytes from 192.168.110.11 icmp_seq=2 ttl=63 time=60.819 ms
+84 bytes from 192.168.110.11 icmp_seq=3 ttl=63 time=60.698 ms
+84 bytes from 192.168.110.11 icmp_seq=4 ttl=63 time=45.388 ms
+84 bytes from 192.168.110.11 icmp_seq=5 ttl=63 time=60.503 ms

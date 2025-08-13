@@ -1,0 +1,221 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Solution
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // // N. Задача 1
+            List<int> list1 = new List<int> { 1, 2, 3, 4 };
+            List<int> list2 = new List<int> { 3, 4, 5, 6 };
+
+            Console.WriteLine("Intersection: " + string.Join(", ", ListOperations.GetIntersection(list1, list2)));
+            Console.WriteLine("Union: " + string.Join(", ", ListOperations.GetUnion(list1, list2)));
+
+            // N. Задача 2
+            List<int> numbers = new List<int> { 1, 1, 2, 2, 2, 3, 3 };
+            Console.WriteLine("Longest subsequence: " + string.Join(", ", LongestSubsequence.Find(numbers)));
+
+            // N. Задача 3
+            List<int> mixedNumbers = new List<int> { -1, 2, -3, 4, 5 };
+            Console.WriteLine("Without negatives: " + string.Join(", ", ListOperations.RemoveNegatives(mixedNumbers)));
+
+            // N. Задача 4
+            var linkedList = new DoublyLinkedList<int>();
+            linkedList.AddLast(1);
+            linkedList.AddLast(2);
+            linkedList.AddLast(3);
+            Console.WriteLine("Linked list: " + string.Join(", ", linkedList.ToArray()));
+
+            // N. Задача 5
+            int[] arr = { 1, 2, 4, 11, 12, 8 };
+            int num = 2;
+            Console.WriteLine("Max value: " + ListOperations.MaxValueAfterDoubling(arr, num));
+
+            // N. Задача 6
+            char[,] matrix =
+            {
+                { 'A', 'A', 'B' },
+                { 'A', 'C', 'B' },
+                { 'D', 'D', 'B' }
+            };
+            Console.WriteLine("Unique Regions: " + RegionCounter.Count(matrix));
+
+            // N. Задача 7
+            var root = new TreeNode(10)
+            {
+                Left = new TreeNode(5)
+                {
+                    Left = new TreeNode(2),
+                    Right = null
+                },
+                Right = new TreeNode(15)
+                {
+                    Left = new TreeNode(12),
+                    Right = new TreeNode(17)
+                }
+            };
+            Console.WriteLine("Is Valid BST: " + BinarySearchTreeValidator.IsValidBST(root));
+        }
+    }
+
+    public static class ListOperations
+    {
+        public static List<int> GetIntersection(List<int> list1, List<int> list2)
+        {
+            return list1.Intersect(list2).ToList();
+        }
+
+        public static List<int> GetUnion(List<int> list1, List<int> list2)
+        {
+            return list1.Union(list2).ToList();
+        }
+
+        public static List<int> RemoveNegatives(List<int> list)
+        {
+            return list.Where(x => x >= 0).ToList();
+        }
+
+        public static int MaxValueAfterDoubling(int[] arr, int num)
+        {
+            Array.Sort(arr);
+            foreach (var item in arr)
+            {
+                if (item == num) num *= 2;
+            }
+            return num;
+        }
+    }
+
+    public static class LongestSubsequence
+    {
+        public static List<int> Find(List<int> numbers)
+        {
+            int maxLength = 0;
+            int currentLength = 1;
+            int number = numbers[0];
+
+            for (int i = 1; i < numbers.Count; i++)
+            {
+                if (numbers[i] == numbers[i - 1])
+                {
+                    currentLength++;
+                    if (currentLength > maxLength)
+                    {
+                        maxLength = currentLength;
+                        number = numbers[i];
+                    }
+                }
+                else
+                {
+                    currentLength = 1;
+                }
+            }
+
+            return Enumerable.Repeat(number, maxLength).ToList();
+        }
+    }
+
+    public class DoublyLinkedList<T>
+    {
+        private class Node
+        {
+            public T Value;
+            public Node Next;
+            public Node Previous;
+        }
+
+        private Node head;
+        private Node tail;
+
+        public void AddLast(T value)
+        {
+            var newNode = new Node { Value = value };
+            if (tail == null)
+            {
+                head = tail = newNode;
+            }
+            else
+            {
+                tail.Next = newNode;
+                newNode.Previous = tail;
+                tail = newNode;
+            }
+        }
+
+        public T[] ToArray()
+        {
+            var list = new List<T>();
+            var current = head;
+            while (current != null)
+            {
+                list.Add(current.Value);
+                current = current.Next;
+            }
+            return list.ToArray();
+        }
+    }
+
+    public static class RegionCounter
+    {
+        public static int Count(char[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+            bool[,] visited = new bool[rows, cols];
+            int regionCount = 0;
+
+            void DFS(int row, int col, char target)
+            {
+                if (row < 0 || col < 0 || row >= rows || col >= cols || visited[row, col] || matrix[row, col] != target)
+                    return;
+
+                visited[row, col] = true;
+                DFS(row + 1, col, target);
+                DFS(row - 1, col, target);
+                DFS(row, col + 1, target);
+                DFS(row, col - 1, target);
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (!visited[i, j])
+                    {
+                        regionCount++;
+                        DFS(i, j, matrix[i, j]);
+                    }
+                }
+            }
+
+            return regionCount;
+        }
+    }
+
+    public static class BinarySearchTreeValidator
+    {
+        public static bool IsValidBST(TreeNode root, int? min = null, int? max = null)
+        {
+            if (root == null) return true;
+            if ((min.HasValue && root.Value <= min.Value) || (max.HasValue && root.Value >= max.Value)) return false;
+
+            return IsValidBST(root.Left, min, root.Value) && IsValidBST(root.Right, root.Value, max);
+        }
+    }
+
+    public class TreeNode
+    {
+        public int Value;
+        public TreeNode Left;
+        public TreeNode Right;
+
+        public TreeNode(int value)
+        {
+            Value = value;
+        }
+    }
+}

@@ -1,0 +1,15 @@
+https://pantheon.io/
+
+Account
+
+stu2201261077@uni-plovdiv.bg
+
+
+https://docs.pantheon.io/guides/git ако искаш да си го дръпнеш.
+
+
+Моя сайт :  https://dev-hairdresser-anush.pantheonsite.io/
+
+Имам и репозитори в Guthub с файловете качени: https://github.com/RafiBG/HairDresserAnush
+
+Ако не работи значи е минало повече от 30 дена при което трябва да се включи в Pantheon.io

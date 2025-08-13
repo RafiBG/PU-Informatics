@@ -1,0 +1,117 @@
+using System;
+
+namespace AlgoritHomeWork2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Monotonic();            // N. Задача 1
+            PrimeNumber();          // N. Задача 2
+            CalculateSumOfDigits(); // N. Задача 3
+        }
+
+        public static void Monotonic()  // N. Задача 1
+        {
+            double[] sequence = new double[9];
+            Console.WriteLine("Enter 9 real numbers in the range -99.99 to 99.99");
+
+            for (int i = 0; i < sequence.Length; i++)
+            {
+                double number;
+                while (true)
+                {
+                    Console.Write($"Enter number {i + 1}: ");
+                    number = double.Parse(Console.ReadLine());
+                    if (number >= -99.99 && number <= 99.99)
+                        break;
+
+                    Console.WriteLine("The number must be in the range -99.99 to 99.99");
+                }
+                sequence[i] = number;
+            }
+
+            bool isMonotonic = CheckMonotonic(sequence, 0);
+
+            Console.WriteLine(isMonotonic
+                ? "The sequence is monotonically increasing."
+                : "The sequence is not monotonically increasing.");
+
+            bool CheckMonotonic(double[] array, int index)
+            {
+                if (index == array.Length - 1)
+                    return true;
+
+                if (array[index] > array[index + 1])
+                    return false;
+
+                return CheckMonotonic(array, index + 1);
+            }
+            return;
+        }
+
+        public static void PrimeNumber()    // N. Задача 2
+        {
+            Console.Write("Enter a natural number 10 to 100010: ");
+            int n = int.Parse(Console.ReadLine());
+
+            if (n < 10 || n > 100010)
+            {
+                Console.WriteLine("The number must be in the range 10 to 100010");
+                return;
+            }
+
+            FindNextPrimeNumber finder = new FindNextPrimeNumber();
+            int nextPrime = finder.Find(n);
+            Console.WriteLine($"The closest larger prime number greater than {n} is: {nextPrime}");
+        }
+
+        class FindNextPrimeNumber
+        {
+            public int Find(int number)
+            {
+                int candidate = number + 1;
+                while (!IsPrime(candidate))
+                {
+                    candidate++;
+                }
+                return candidate;
+            }
+
+            private bool IsPrime(int number)
+            {
+                if (number < 2) return false;
+                for (int i = 2; i <= Math.Sqrt(number); i++)
+                {
+                    if (number % i == 0)
+                        return false;
+                }
+                return true;
+            }
+        }
+        public static void CalculateSumOfDigits()   // N. Задача 3
+        {
+            Console.Write("Enter a natural number 10 to 10010: ");
+            int n = int.Parse(Console.ReadLine());
+
+            if (n < 10 || n > 10010)
+            {
+                Console.WriteLine("The number must be in the range 10 to 10010");
+                return;
+            }
+
+            int sum = GetSumOfDigits(n);
+            Console.WriteLine($"The sum of the digits of {n} is: {sum}");
+        }
+
+        private static int GetSumOfDigits(int number)
+        {
+            if (number == 0)
+            {
+                return 0;
+            }
+               
+            return number % 10 + GetSumOfDigits(number / 10);
+        }
+    }
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <title>Поръчки</title>
+</head>
+<body>
+    <h1>Поръчки</h1>
+    <form action="/action_page.php">
+        <label for="ogurlicha">Избери огърлица</label>
+        <select name="ogurlicha" id="ogurlicha">
+            <optgroup label="Златни огърлици">
+                <option value="zlatnaogurlicha1">Огърлица 1</option>
+                <option value="zlatnaogurlicha2">Огърлица 2</option>
+                <option value="zlatnaogurlicha3">Огърлица 3</option>
+            </optgroup>
+            <optgroup label="Сребърни огърлици">
+                <option value="sreburnaogurlicha1">Огърлица 1</option>
+                <option value="sreburnaogurlicha2">Огърлица 2</option>
+                <option value="sreburnaogurlicha1">Огърлица 3</option>
+            </optgroup>
+
+        </select>
+        <p>Информация за копувача</p>
+        <label for="fname">Име:</label><br>
+        <input type="text" id="fname" name="fname" value=""><br>
+        <label for="lname">Фамилия:</label><br>
+        <input type="text" id="lname" name="lname" value=""> <br>
+        <label for="lname">Адрес:</label><br>
+        <input type="text" id="laddr" name="laddr" value=""> <br>
+        <label for="phone">Телефонен номер:</label><br>
+        <input type="tel" id="phone" name="phone" placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"><br><br>
+
+        <input type="submit" value="Submit">
+      </form>
+</body>
+</html>

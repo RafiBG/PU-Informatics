@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <title>За фирмата</title>
+
+    <h1 class="h1-title">За фирмата</h1>
+    <div id="MenuList">
+            <h2 class="current">Партнюри</h2>
+            <b><a class="current" href="https://www.pandorasilver.eu/bg-catalog-details-11.html" target="iframe_a">Pandora</a></b><br>
+            <b><a class="current" href="https://www.eliteprecious.com/" target="iframe_a">Eliteprecious</a></b><br>
+    </div>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <link rel="stylesheet" type="text/css" href="ZaFirmataStyle.css">
+
+    <div class="iframe">
+        <iframe src="demo_iframe.htm" name="iframe_a"></iframe>
+    </div>
+
+    <canvas id="myCanvas" width="250" height="300"
+style="border:1px solid #d3d3d3; background-color: aquamarine;">
+Your browser does not support the HTML canvas tag.</canvas>
+
+
+    
+    <script>
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.moveTo(30,250);
+    ctx.lineTo(0,300);
+    ctx.moveTo(30 ,250)
+    ctx.lineTo(160,150)
+    ctx.stroke();
+    ctx.lineTo(160,180)
+    ctx.stroke();
+    </script>
+    
+</body>
+</html>

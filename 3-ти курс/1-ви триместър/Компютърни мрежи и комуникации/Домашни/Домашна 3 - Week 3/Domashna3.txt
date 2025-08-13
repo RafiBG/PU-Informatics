@@ -1,0 +1,825 @@
+R1----------------------------------------------------------------
+R1#show ip int br
+Interface                  IP-Address      OK? Method Status                Protocol
+FastEthernet0/0            unassigned      YES manual up                    up
+FastEthernet0/0.10         192.168.10.1    YES manual up                    up
+FastEthernet0/0.14         unassigned      YES unset  up                    up
+FastEthernet0/0.20         192.168.20.1    YES manual up                    up
+FastEthernet0/0.30         192.168.30.1    YES manual up                    up
+FastEthernet0/0.40         192.168.40.1    YES manual up                    up
+Serial0/0                  unassigned      YES unset  administratively down down
+FastEthernet0/1            unassigned      YES unset  administratively down down
+FastEthernet0/1.14         unassigned      YES unset  administratively down down
+FastEthernet0/1.40         unassigned      YES unset  administratively down down
+Serial0/1                  unassigned      YES unset  administratively down down
+R1#show run conf
+             ^
+% Invalid input detected at '^' marker.
+
+R1#show r
+R1#show run
+R1#show running-config
+Building configuration...
+
+Current configuration : 2105 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+memory-size iomem 5
+ip subnet-zero
+no ip icmp rate-limit unreachable
+ip cef
+ip tcp synwait-time 5
+!
+!
+no ip dhcp use vrf connected
+ip dhcp excluded-address 192.168.20.1 192.168.20.10
+ip dhcp excluded-address 192.168.30.1 192.168.30.10
+ip dhcp excluded-address 192.168.40.1 192.168.40.20
+!
+ip dhcp pool p20
+   network 192.168.20.0 255.255.255.0
+   default-router 192.168.20.1
+   dns-server 192.168.20.1
+   domain-name test20.com
+!
+ip dhcp pool p30
+   network 192.168.30.0 255.255.255.0
+   default-router 192.168.30.1
+   dns-server 192.168.30.1
+   domain-name test30.com
+!
+ip dhcp pool p40
+   network 192.168.40.0 255.255.255.0
+   default-router 192.168.40.1
+   dns-server 192.168.40.1
+   domain-name test40.com
+!
+!
+no ip domain lookup
+
+!
+!
+interface FastEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+ no snmp trap link-status
+!
+interface FastEthernet0/0.14
+!
+interface FastEthernet0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+ no snmp trap link-status
+!
+interface FastEthernet0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.30.1 255.255.255.0
+ no snmp trap link-status
+!
+interface FastEthernet0/0.40
+ encapsulation dot1Q 40
+ ip address 192.168.40.1 255.255.255.0
+ no snmp trap link-status
+!
+interface Serial0/0
+ no ip address
+ shutdown
+ clock rate 3000000
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1.14
+!
+interface FastEthernet0/1.40
+!
+interface Serial0/1
+ no ip address
+ shutdown
+ clock rate 3000000
+!
+ip classless
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
+
+ESW1----------------------------------------------------------------
+ESW1#show vlan-switch brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/6, Fa1/7, Fa1/8, Fa1/9
+                                                Fa1/10, Fa1/11, Fa1/12, Fa1/13
+                                                Fa1/14
+10   server                           active    Fa1/0, Fa1/1
+20   acc                              active    Fa1/2, Fa1/3
+30   hr                               active    Fa1/4, Fa1/5
+1002 fddi-default                     active
+1003 token-ring-default               active
+1004 fddinet-default                  active
+1005 trnet-default                    active
+ESW1#show run
+Building configuration...
+
+Current configuration : 2652 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+no service dhcp
+!
+hostname ESW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+memory-size iomem 5
+ip subnet-zero
+no ip routing
+no ip icmp rate-limit unreachable
+no ip cef
+ip tcp synwait-time 5
+!
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+!
+vtp file nvram:vlan.dat
+
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ description *** Unused for Layer2 EtherSwitch ***
+ no ip address
+ no ip route-cache
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ description *** Unused for Layer2 EtherSwitch ***
+ no ip address
+ no ip route-cache
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/0
+ switchport access vlan 10
+ duplex full
+ speed 100
+!
+interface FastEthernet1/1
+ switchport access vlan 10
+ duplex full
+ speed 100
+!
+interface FastEthernet1/2
+ switchport access vlan 20
+ duplex full
+ speed 100
+!
+interface FastEthernet1/3
+ switchport access vlan 20
+ duplex full
+ speed 100
+!
+interface FastEthernet1/4
+ switchport access vlan 30
+ duplex full
+ speed 100
+!
+interface FastEthernet1/5
+ switchport access vlan 30
+ duplex full
+ speed 100
+!
+interface FastEthernet1/6
+ duplex full
+ speed 100
+!
+interface FastEthernet1/7
+ duplex full
+ speed 100
+!
+interface FastEthernet1/8
+ duplex full
+ speed 100
+!
+interface FastEthernet1/9
+ duplex full
+ speed 100
+!
+interface FastEthernet1/10
+ duplex full
+ speed 100
+!
+interface FastEthernet1/11
+ duplex full
+ speed 100
+!
+interface FastEthernet1/12
+ duplex full
+ speed 100
+!
+interface FastEthernet1/13
+ duplex full
+ speed 100
+!
+interface FastEthernet1/14
+ duplex full
+ speed 100
+!
+interface FastEthernet1/15
+ switchport mode trunk
+ duplex full
+ speed 100
+!
+interface Vlan1
+ no ip address
+ no ip route-cache
+ shutdown
+!
+ip classless
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+control-plane
+!
+!
+banner exec ^C
+
+***************************************************************
+This is a normal Router with a SW module inside (NM-16ESW)
+It has been preconfigured with hard coded speed and duplex
+
+To create vlans use the command "vlan database" from exec mode
+After creating all desired vlans use "exit" to apply the config
+
+To view existing vlans use the command "show vlan-switch brief"
+
+Warning: You are using an old IOS image for this router.
+Please update the IOS to enable the "macro" command!
+***************************************************************
+
+^C
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
+
+ESW1#show ip int br
+Interface                  IP-Address      OK? Method Status                Protocol
+FastEthernet0/0            unassigned      YES NVRAM  administratively down down
+FastEthernet0/1            unassigned      YES NVRAM  administratively down down
+FastEthernet1/0            unassigned      YES unset  up                    up
+FastEthernet1/1            unassigned      YES unset  up                    up
+FastEthernet1/2            unassigned      YES unset  up                    up
+FastEthernet1/3            unassigned      YES unset  up                    up
+FastEthernet1/4            unassigned      YES unset  up                    up
+FastEthernet1/5            unassigned      YES unset  up                    up
+FastEthernet1/6            unassigned      YES unset  up                    down
+FastEthernet1/7            unassigned      YES unset  up                    down
+FastEthernet1/8            unassigned      YES unset  up                    down
+FastEthernet1/9            unassigned      YES unset  up                    down
+FastEthernet1/10           unassigned      YES unset  up                    down
+FastEthernet1/11           unassigned      YES unset  up                    down
+FastEthernet1/12           unassigned      YES unset  up                    down
+FastEthernet1/13           unassigned      YES unset  up                    down
+FastEthernet1/14           unassigned      YES unset  up                    up
+FastEthernet1/15           unassigned      YES unset  up                    up
+Vlan1                      unassigned      YES NVRAM  administratively down down
+ESW1# show vlan-sw
+ESW1# show vlan-switch br
+ESW1# show vlan-switch brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/6, Fa1/7, Fa1/8, Fa1/9
+                                                Fa1/10, Fa1/11, Fa1/12, Fa1/13
+                                                Fa1/14
+10   server                           active    Fa1/0, Fa1/1
+20   acc                              active    Fa1/2, Fa1/3
+30   hr                               active    Fa1/4, Fa1/5
+1002 fddi-default                     active
+1003 token-ring-default               active
+1004 fddinet-default                  active
+1005 trnet-default                    active
+ESW1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+ESW1(config)#int fa 1/14
+ESW1(config-if)#sw
+ESW1(config-if)#switchport mode
+ESW1(config-if)#switchport mode trunk
+ESW1(config-if)#e
+*Mar  1 00:58:49.619: %DTP-5-TRUNKPORTON: Port Fa1/14 has become dot1q trunk
+ESW1(config-if)#exi
+ESW1(config)#exit
+ESW1#write
+Building configuration...
+
+*Mar  1 00:58:55.935: %SYS-5-CONFIG_I: Configured from console by console[OK]
+ESW1# NVRAM.
+Translating "NVRAM."
+
+Translating "NVRAM."
+% Unknown command or computer name, or unable to find computer address
+ESW1#1024K bytes o
+ESW1#show vla
+ESW1#show vlan-s
+ESW1#show vlan-switch brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/6, Fa1/7, Fa1/8, Fa1/9
+                                                Fa1/10, Fa1/11, Fa1/12, Fa1/13
+10   server                           active    Fa1/0, Fa1/1
+20   acc                              active    Fa1/2, Fa1/3
+30   hr                               active    Fa1/4, Fa1/5
+1002 fddi-default                     active
+1003 token-ring-default               active
+1004 fddinet-default                  active
+1005 trnet-default                    active
+ESW1#show run
+Building configuration...
+
+Current configuration : 2675 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+no service dhcp
+!
+hostname ESW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+memory-size iomem 5
+ip subnet-zero
+no ip routing
+no ip icmp rate-limit unreachable
+no ip cef
+ip tcp synwait-time 5
+!
+!
+!
+!
+no ip domain lookup
+
+!
+!
+vtp file nvram:vlan.dat
+
+
+!
+!
+interface FastEthernet0/0
+ description *** Unused for Layer2 EtherSwitch ***
+ no ip address
+ no ip route-cache
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ description *** Unused for Layer2 EtherSwitch ***
+ no ip address
+ no ip route-cache
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/0
+ switchport access vlan 10
+ duplex full
+ speed 100
+!
+interface FastEthernet1/1
+ switchport access vlan 10
+ duplex full
+ speed 100
+!
+interface FastEthernet1/2
+ switchport access vlan 20
+ duplex full
+ speed 100
+!
+interface FastEthernet1/3
+ switchport access vlan 20
+ duplex full
+ speed 100
+!
+interface FastEthernet1/4
+ switchport access vlan 30
+ duplex full
+ speed 100
+!
+interface FastEthernet1/5
+ switchport access vlan 30
+ duplex full
+ speed 100
+!
+interface FastEthernet1/6
+ duplex full
+ speed 100
+!
+interface FastEthernet1/7
+ duplex full
+ speed 100
+!
+interface FastEthernet1/8
+ duplex full
+ speed 100
+!
+interface FastEthernet1/9
+ duplex full
+ speed 100
+!
+interface FastEthernet1/10
+ duplex full
+ speed 100
+!
+interface FastEthernet1/11
+ duplex full
+ speed 100
+!
+interface FastEthernet1/12
+ duplex full
+ speed 100
+!
+interface FastEthernet1/13
+ duplex full
+ speed 100
+!
+interface FastEthernet1/14
+ switchport mode trunk
+ duplex full
+ speed 100
+!
+interface FastEthernet1/15
+ switchport mode trunk
+ duplex full
+ speed 100
+!
+interface Vlan1
+ no ip address
+ no ip route-cache
+ shutdown
+!
+ip classless
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+control-plane
+!
+!
+banner exec ^C
+
+***************************************************************
+This is a normal Router with a SW module inside (NM-16ESW)
+It has been preconfigured with hard coded speed and duplex
+
+To create vlans use the command "vlan database" from exec mode
+After creating all desired vlans use "exit" to apply the config
+
+To view existing vlans use the command "show vlan-switch brief"
+
+Warning: You are using an old IOS image for this router.
+Please update the IOS to enable the "macro" command!
+***************************************************************
+
+^C
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
+
+ESW1#show ip int br
+Interface                  IP-Address      OK? Method Status                Protocol
+FastEthernet0/0            unassigned      YES NVRAM  administratively down down
+FastEthernet0/1            unassigned      YES NVRAM  administratively down down
+FastEthernet1/0            unassigned      YES unset  up                    up
+FastEthernet1/1            unassigned      YES unset  up                    up
+FastEthernet1/2            unassigned      YES unset  up                    up
+FastEthernet1/3            unassigned      YES unset  up                    up
+FastEthernet1/4            unassigned      YES unset  up                    up
+FastEthernet1/5            unassigned      YES unset  up                    up
+FastEthernet1/6            unassigned      YES unset  up                    down
+FastEthernet1/7            unassigned      YES unset  up                    down
+FastEthernet1/8            unassigned      YES unset  up                    down
+FastEthernet1/9            unassigned      YES unset  up                    down
+FastEthernet1/10           unassigned      YES unset  up                    down
+FastEthernet1/11           unassigned      YES unset  up                    down
+FastEthernet1/12           unassigned      YES unset  up                    down
+FastEthernet1/13           unassigned      YES unset  up                    down
+FastEthernet1/14           unassigned      YES unset  up                    up
+FastEthernet1/15           unassigned      YES unset  up                    up
+Vlan1                      unassigned      YES NVRAM  administratively down down
+ESW1#
+
+ESW2----------------------------------------------------------------
+ESW2#show vlan-switch brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/1, Fa1/2, Fa1/3, Fa1/4
+                                                Fa1/5, Fa1/9, Fa1/10, Fa1/11
+                                                Fa1/12, Fa1/13, Fa1/15
+10   server                           active
+20   acc                              active
+30   hr                               active    Fa1/8
+40   prod                             active    Fa1/0, Fa1/6, Fa1/7
+1002 fddi-default                     active
+1003 token-ring-default               active
+1004 fddinet-default                  active
+1005 trnet-default                    active
+ESW2#show run
+Building configuration...
+
+Current configuration : 2578 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+no service dhcp
+!
+hostname ESW2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+resource policy
+!
+memory-size iomem 5
+ip subnet-zero
+no ip routing
+no ip icmp rate-limit unreachable
+no ip cef
+ip tcp synwait-time 5
+
+!
+no ip domain lookup
+
+!
+vtp file nvram:vlan.dat
+
+
+!
+interface FastEthernet0/0
+ description *** Unused for Layer2 EtherSwitch ***
+ no ip address
+ no ip route-cache
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ description *** Unused for Layer2 EtherSwitch ***
+ no ip address
+ no ip route-cache
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/0
+ switchport access vlan 40
+ duplex full
+ speed 100
+!
+interface FastEthernet1/1
+ duplex full
+ speed 100
+!
+interface FastEthernet1/2
+ duplex full
+ speed 100
+!
+interface FastEthernet1/3
+ duplex full
+ speed 100
+!
+interface FastEthernet1/4
+ duplex full
+ speed 100
+!
+interface FastEthernet1/5
+ duplex full
+ speed 100
+!
+interface FastEthernet1/6
+ switchport access vlan 40
+ duplex full
+ speed 100
+!
+interface FastEthernet1/7
+ switchport access vlan 40
+ duplex full
+ speed 100
+!
+interface FastEthernet1/8
+ switchport access vlan 30
+ duplex full
+ speed 100
+!
+interface FastEthernet1/9
+ duplex full
+ speed 100
+!
+interface FastEthernet1/10
+ duplex full
+ speed 100
+!
+interface FastEthernet1/11
+ duplex full
+ speed 100
+!
+interface FastEthernet1/12
+ duplex full
+ speed 100
+!
+interface FastEthernet1/13
+ duplex full
+ speed 100
+!
+interface FastEthernet1/14
+ switchport mode trunk
+ duplex full
+ speed 100
+!
+interface FastEthernet1/15
+ duplex full
+ speed 100
+!
+interface Vlan1
+ no ip address
+ no ip route-cache
+ shutdown
+!
+ip classless
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+control-plane
+!
+!
+banner exec ^C
+
+***************************************************************
+This is a normal Router with a SW module inside (NM-16ESW)
+It has been preconfigured with hard coded speed and duplex
+
+To create vlans use the command "vlan database" from exec mode
+After creating all desired vlans use "exit" to apply the config
+
+To view existing vlans use the command "show vlan-switch brief"
+
+Warning: You are using an old IOS image for this router.
+Please update the IOS to enable the "macro" command!
+***************************************************************
+
+^C
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+!
+!
+end
+
+ESW2#show ip int br
+Interface                  IP-Address      OK? Method Status                Protocol
+FastEthernet0/0            unassigned      YES NVRAM  up                    up
+FastEthernet0/1            unassigned      YES NVRAM  up                    up
+FastEthernet1/0            unassigned      YES unset  up                    down
+FastEthernet1/1            unassigned      YES unset  up                    down
+FastEthernet1/2            unassigned      YES unset  up                    down
+FastEthernet1/3            unassigned      YES unset  up                    down
+FastEthernet1/4            unassigned      YES unset  up                    down
+FastEthernet1/5            unassigned      YES unset  up                    down
+FastEthernet1/6            unassigned      YES unset  up                    up
+FastEthernet1/7            unassigned      YES unset  up                    up
+FastEthernet1/8            unassigned      YES unset  up                    up
+FastEthernet1/9            unassigned      YES unset  up                    down
+FastEthernet1/10           unassigned      YES unset  up                    down
+FastEthernet1/11           unassigned      YES unset  up                    down
+FastEthernet1/12           unassigned      YES unset  up                    down
+FastEthernet1/13           unassigned      YES unset  up                    down
+FastEthernet1/14           unassigned      YES unset  up                    up
+FastEthernet1/15           unassigned      YES unset  up                    down
+Vlan1                      unassigned      YES NVRAM  administratively down down
+
+
+PC1> show ip
+
+NAME        : PC1[1]
+IP/MASK     : 192.168.10.2/24
+GATEWAY     : 0.0.0.0
+DNS         :
+MAC         : 00:50:79:66:68:00
+LPORT       : 10048
+RHOST:PORT  : 127.0.0.1:10049
+MTU:        : 1500

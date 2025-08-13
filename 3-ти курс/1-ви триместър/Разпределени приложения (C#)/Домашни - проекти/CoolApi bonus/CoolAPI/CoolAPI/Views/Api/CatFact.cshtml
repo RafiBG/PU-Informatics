@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Cat Fact";
+}
+
+<h2>Cat Fact  @ViewData["result"]</h2>
+
+<p>Факт: @ViewData["fact"]</p>
+
+@using (Html.BeginForm("CatFact", "Api", FormMethod.Post)) //Refresh button for new fact
+{
+    <p>
+        <input type="submit" value="Друг факт за котка" />
+    </p>
+}

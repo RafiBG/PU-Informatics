@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Meme Generator";
+}
+
+<h2>Meme Generator</h2>
+
+<form asp-action="MemeGenerator" method="post">
+    <p>
+        <label for="topText">Top Text:</label>
+        <input type="text" id="topText" name="topText" required />
+    </p>
+    <p>
+        <label for="bottomText">Bottom Text:</label>
+        <input type="text" id="bottomText" name="bottomText" required />
+    </p>
+    <p>
+        <label for="selectedTemplate">Select Meme Template:</label>
+        <select id="selectedTemplate" name="selectedTemplate" required>
+            @foreach (var template in (List<string>)ViewData["MemeTemplates"])
+            {
+                <option value="@template">@template</option>
+            }
+        </select>
+    </p>
+    <input type="submit" value="Generate Meme" />
+</form>
+
+@if (ViewData["MemeResponse"] != null)
+{
+    <h3>Generated Meme:</h3>
+    <img src="@ViewData["MemeResponse"]" alt="Generated Meme" /> 
+}
+else
+{
+    <p>Please enter text to generate a meme.</p>
+}
+

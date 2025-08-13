@@ -1,0 +1,66 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{1C79ACD4-5F7C-45DD-AA59-D9E717518E25}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>WinExe</OutputType>
+    <MyType>WindowsForms</MyType>
+    <RootNamespace>Draw</RootNamespace>
+    <AssemblyName>Draw</AssemblyName>
+    <ApplicationIcon>src\GUI\Draw.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <DefineConstants>DEBUG=1,TRACE=1</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <DefineConstants>TRACE=1</DefineConstants>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.Targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\AssemblyInfo.vb" />
+    <Compile Include="src\GUI\DoubleBufferedPanel.vb" />
+    <Compile Include="src\GUI\DoubleBufferedPanel.Designer.vb">
+      <DependentUpon>DoubleBufferedPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="src\GUI\MainForm.vb" />
+    <Compile Include="src\GUI\MainForm.Designer.vb">
+      <DependentUpon>MainForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="src\GUI\Program.vb" />
+    <Compile Include="src\Model\RectangleShape.vb" />
+    <Compile Include="src\Model\Shape.vb" />
+    <Compile Include="src\Processors\DialogProcessor.vb" />
+    <Compile Include="src\Processors\DisplayProcessor.vb" />
+    <EmbeddedResource Include="src\GUI\DoubleBufferedPanel.resx">
+      <DependentUpon>DoubleBufferedPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\GUI\MainForm.resx">
+      <DependentUpon>MainForm.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\GUI" />
+    <Folder Include="src\Model" />
+    <Folder Include="src\Processors" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+</Project>

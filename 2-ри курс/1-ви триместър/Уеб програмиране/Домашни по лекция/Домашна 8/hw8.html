@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8">
+		<script>
+		function getValues(fields) {
+			let objects = document.getElementsByClassName(fields);
+			let arr = [];
+			for (let object of objects) {
+				if (isInvalid(object)) return null;
+				arr.push(Number(object.value));
+			}
+			return arr;
+		}
+		function sum(arr) {
+			return arr.reduce(
+				(accumulator, currentValue) => accumulator + currentValue, // lambda
+				0 // Initial value
+			);
+		}
+
+		function addNewMonth() {
+			let calcBody = document.getElementById("calc_fields");
+			// month row
+			let monthRow = document.createElement("div");
+			monthRow.setAttribute("class", "monthRow");
+			
+			let incomeField = genInput("income");
+			let expencesField = genInput("expences");
+
+			// Put everything together
+			monthRow.appendChild(incomeField);
+			monthRow.appendChild(expencesField);
+			calcBody.appendChild(monthRow);
+		}
+
+		function genInput(name) {
+			let field = document.createElement("input");
+			field.setAttribute("inputmode", "numeric");
+			field.setAttribute("pattern", "\\d+(\\.\\d{2})?");
+			field.setAttribute("class", `${name} calc`);
+			field.setAttribute("placeholder", name);
+			return field;
+		}
+
+		function isInvalid(element) {
+			return element.validity.patternMismatch;
+		}
+
+		function clearOutput() {
+			output = document.getElementById("output");
+			output.replaceChildren();
+			return output;
+		}
+
+		function appendOutput(string, output){
+			text = document.createTextNode(string);
+			output.appendChild(text);
+			return output;
+		}
+		function appendNewLine(output){
+			let nl = document.createElement("br");
+			output.appendChild(nl);
+			return output;
+		}
+
+		function calculate() {
+			let income = getValues("income");
+			if (income == null) {
+				generateOutput("Invalid data!");
+				return;
+			}
+			let expences = getValues("expences");
+			if (expences == null) {
+				generateOutput("Invalid data!");
+				return;
+			}
+			let profit = sum(income) - sum(expences);
+			let output = clearOutput();
+			let tax = profit * 0.20;
+			appendOutput(`Tax: ${tax}`, output);
+			appendNewLine(output);
+			appendOutput(`Total: ${profit - tax}`, output);
+		}
+
+		function disableCalc(node, disable){
+			fields =document.getElementsByClassName("calc");
+			for(field of fields) {
+				field.disabled = disable;
+			}
+		}
+		</script>
+		<style>
+		.income:invalid, .expences:invalid {
+			background-color: #e4717a;
+		}
+		</style>
+	</head>
+<body>
+	<div id="calc" onmouseout="disableCalc(this, true)" onmouseover="disableCalc(this, false)">
+	<div id="calc_fields">
+	<div class="monthRow">
+	<input inputmode="numeric" pattern="\d+(\.\d{2})?" class="income calc" placeholder="income"><input inputmode="numeric" pattern="\d+(\.\d{2})?" class="expences calc" placeholder="expences">
+	</div>
+	</div>
+	<input type="button" value="calculate" class="calc" onclick="calculate()">
+	<input type="button" value="+" class="calc" onclick="addNewMonth()">
+	<div id="output"></div>
+	</div>
+</body>
+	
+</html>

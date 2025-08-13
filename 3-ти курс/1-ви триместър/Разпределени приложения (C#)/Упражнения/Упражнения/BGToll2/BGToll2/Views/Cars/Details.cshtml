@@ -1,0 +1,42 @@
+﻿@model BGToll2.Models.Car
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Car</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.licensePlateNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.licensePlateNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.vignetteNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.vignetteNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.validityDateToFormated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.validityDateToFormated)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

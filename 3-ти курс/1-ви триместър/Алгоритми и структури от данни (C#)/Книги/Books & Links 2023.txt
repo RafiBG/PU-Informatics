@@ -1,0 +1,29 @@
+Книги
+
+[1] Thomas Cormen, Charles Leiserson, Ronald Rivest, Clifford Stein, Introduction to Algorithms, Fourth Edition, MIT Press, 2022;
+https://dl.ebooksworld.ir/books/Introduction.to.Algorithms.4th.Leiserson.Stein.Rivest.Cormen.MIT.Press.9780262046305.EBooksWorld.ir.pdf
+
+[2] Светлин Наков, Веселин Колев и колектив, Принципи на програмирането със C#, София, 2018;
+https://introprogramming.info/wp-content/uploads/2018/07/CSharp-Principles-Book-Nakov-v2018.pdf
+
+[3] Michael McMillan, Data Structures and Algorithms Using C#, Cambridge University Press, 2007
+[4] Jeff Edmonds, How to Think About Algorithms, Cambridge University Press, 2008
+[5] Kurt Mehlhorn, Peter Sanders, Algorithms and Data Structures, The Basic Toolbox, Springer, 2007
+
+
+Материали за структури от данни в MSDN
+
+https://docs.microsoft.com/en-us/previous-versions/ms379570(v=vs.80)
+https://docs.microsoft.com/en-us/previous-versions/ms379571(v=vs.80)
+https://docs.microsoft.com/en-us/previous-versions/ms379572(v=vs.80)
+https://docs.microsoft.com/en-us/previous-versions/ms379573(v=vs.80)
+https://docs.microsoft.com/en-us/previous-versions/ms379574(v=vs.80)
+https://docs.microsoft.com/en-us/previous-versions/ms379575(v=vs.80)
+
+
+Други източници
+
+https://www.cs.usfca.edu/~galles/visualization/DFS.html
+https://www.cs.usfca.edu/~galles/visualization/BFS.html
+https://en.wikipedia.org/wiki/Sorting_algorithm
+https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#:~:text=Dijkstra's%20algorithm%20(%2F%CB%88da%C9%AA,Dijkstra's%20algorithm

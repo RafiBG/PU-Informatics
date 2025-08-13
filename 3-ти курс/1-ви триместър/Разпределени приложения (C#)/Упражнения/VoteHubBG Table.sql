@@ -1,0 +1,28 @@
+CREATE DATABASE VoteHubBG;
+GO
+CREATE TABLE Users (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL,
+    Email NVARCHAR(100) NOT NULL UNIQUE,
+    Password NVARCHAR(255) NOT NULL,
+    HasVoted BIT NOT NULL DEFAULT 0
+);
+
+GO
+CREATE TABLE Candidates (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100) NOT NULL,
+    Party NVARCHAR(100) NOT NULL,
+    Description NVARCHAR(1000),
+    Votes INT DEFAULT 0
+);
+GO
+CREATE TABLE Votes (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    UserId NVARCHAR(450) NOT NULL, -- За съвместимост с IdentityUser
+    CandidateId INT NOT NULL,
+    VoteDate DATETIME NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES AspNetUsers(Id),
+    FOREIGN KEY (CandidateId) REFERENCES Candidates(Id)
+);

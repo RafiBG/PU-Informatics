@@ -1,0 +1,15 @@
+NAT - PAT
+R1(config)# int fa0/0
+R1(config-if)# ip nat inside
+		int fa 0/1
+		ip nat outside
+	  # access-list[1-31] -> две опции: permit и deny [Net] [wildcard-mask]
+
+клас С маска -> 255.255.255.0
+WildCard маска -> 0.0.0.255
+
+R1(config-if)# ip nat inside source list [access list number] interface fa0/1 overload
+R1# show ip nat translation
+
+198.51.100.0 /30
+255.255.255.252

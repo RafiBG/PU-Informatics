@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolAPI", "CoolAPI\CoolAPI.csproj", "{93D007EC-8C67-4B33-A280-05B87C8A2934}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93D007EC-8C67-4B33-A280-05B87C8A2934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93D007EC-8C67-4B33-A280-05B87C8A2934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93D007EC-8C67-4B33-A280-05B87C8A2934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93D007EC-8C67-4B33-A280-05B87C8A2934}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53C9CD03-1D30-49EC-8050-AC19F2FC46B6}
+	EndGlobalSection
+EndGlobal

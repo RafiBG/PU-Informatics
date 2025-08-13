@@ -1,0 +1,27 @@
+﻿@{ 
+    var data = (Car)ViewData["car"];
+}
+
+<h2>BGToll - @ViewData["found"]</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Номер на автомобил: @Html.TextBox("car_id")
+        <input type="submit" value="Проверка" />
+    </p>
+}
+
+
+<h1>Car 1 (pass with ViewData):</h1>
+@data.vignetteNumber
+
+<p>Страна: @data.country</p>
+<p>Номер на винетка: @data.vignetteNumber</p>
+<p>Валидна от: @data.validityDateFromFormated</p>
+
+<h1>Car 2 (pass with return View()):</h1>
+@Model.vignetteNumber
+<p>Страна: @Model.country</p>
+<p>Номер на винетка: @Model.vignetteNumber</p>
+<p>Валидна от: @Model.validityDateFromFormated</p>

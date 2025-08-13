@@ -1,0 +1,103 @@
+
+
+body {
+    background-image: url(images/tree.png), url(images/paper.jpg);
+    background-position: right bottom, left bottom;
+    background-repeat: no-repeat, repeat;
+    background-size: 30% 30%;
+}
+
+.h1 {
+    position: relative;
+    left: 400px;
+    bottom:12px;
+    font-size: 25px;
+}
+
+.text {
+    position: relative;
+    font-size:25px;
+    left: 550px;
+    top:60px;
+}
+
+.text2 {
+    position: relative;
+    font-size: 20px;
+    left: 550px;
+    top:60px;
+}
+
+.unorderedList {
+    position: relative;
+    left:520px;
+    bottom:410px;
+    font-size: 17px;
+}
+
+.text3 {
+    position: relative;
+    font-size: 20px;
+    left: 550px;
+    bottom:400px;
+}
+
+.orderedList {
+    position: relative;
+    left:520px;
+    bottom:410px;
+    font-size:17px;
+}
+
+.btn-group {
+    background-color: #4CAF50;
+    border: 1px solid green;
+    color: white;
+    padding: 10px 24px;
+    cursor: pointer;
+    float:inline-start;
+    text-decoration: none;
+}
+
+.btn-group:hover {
+    background-color: #3e8e41;
+}
+
+.img {
+    height:"450";
+    width:"500";
+    position: relative;
+    left:5px;
+    bottom:80px;
+    box-shadow: 10px;
+}
+
+a:link{ color:chartreuse;}
+a:visited{ color: rgb(239, 5, 239); }
+a:hover{ color: rgb(245, 104, 4); }
+a:active { color: rgb(222, 16, 26); }
+
+.tableTextColor{color:white; box-shadow:5px 10px;}
+
+#th11{background-color:rgb(143, 206, 17);}
+
+#th12{background-color:rgb(94, 50, 205);}
+
+#th13{background-color:rgb(212, 18, 18);}
+
+#th14{background-color:rgb(21, 189, 136);}
+
+#th15{background-color:rgb(226, 16, 198);}
+
+#th16{background-color:rgb(5, 240, 142);}
+
+#th17{background-color:rgb(235, 238, 4);}
+
+#th18{background-color:rgb(247, 138, 6);}
+
+#th19{background-color:rgb(14, 7, 67);}
+
+#th20{background-color:rgb(74, 17, 17);}
+
+#th21{background-color:rgb(5, 57, 26);}
+

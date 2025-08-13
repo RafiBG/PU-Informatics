@@ -1,0 +1,49 @@
+﻿@model CoolAPI.Models.DisneyChacterDB
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>DisneyChacterDB</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Games" class="control-label"></label>
+                <input asp-for="Games" class="form-control" />
+                <span asp-validation-for="Games" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Films" class="control-label"></label>
+                <input asp-for="Films" class="form-control" />
+                <span asp-validation-for="Films" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TV" class="control-label"></label>
+                <input asp-for="TV" class="form-control" />
+                <span asp-validation-for="TV" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
